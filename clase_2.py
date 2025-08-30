@@ -1,4 +1,4 @@
-print("Bienvenido al sistema de registro")
+print("Bienvenido Gestor de Usuarios")
 nombre=input("Ingrese su nombre: ")
 edad=int(input("Ingrese su edad: "))
 email=input("Ingrese su email: ")
