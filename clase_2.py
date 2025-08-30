@@ -1,0 +1,17 @@
+print("Bienvenido al sistema de registro")
+nombre=input("Ingrese su nombre: ")
+edad=int(input("Ingrese su edad: "))
+email=input("Ingrese su email: ")
+h_bar= "-" * (len(nombre)+40)
+relleno_edad= " " * (len(h_bar)-15-len(str(edad)))
+relleno_mail= " " * (len(h_bar)-10-len(email))
+cierre= " " * (len(h_bar))
+
+
+print(f"\n+{h_bar}+")
+print(f"+{" "*20}{nombre}{" "*20}+")
+print(f"+{h_bar}+")
+print(f"+{" "*4}Edad: {edad} años{relleno_edad}+")
+print(f"+{" "*4}mail: {email}{relleno_mail}+")
+print(f"+{cierre}+")
+print(f"+{h_bar}+\n")
