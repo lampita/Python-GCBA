@@ -6,7 +6,7 @@ error_menor="(menor de 18 anos) 👎"
 valido=True
 
 def espera(puntos, tiempo):
-    print("wait", end=" ", flush=True)
+    print("\nwait", end=" ", flush=True)
     while puntos >=0:
         
         print(".", end=" ", flush=True)
