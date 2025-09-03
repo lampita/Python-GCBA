@@ -1,7 +1,7 @@
 import os, time
 
 
-error="\033[31m ERROR! \033[0m"
+error="\033[1;91m ERROR! \033[0m"
 error_vacio="(campo vacio) 👎"
 error_menor="(menor de 18 anos) 👎"
 valido=True
@@ -21,7 +21,7 @@ def borrar_consola():
         os.system('cls')
     else:
         os.system('clear')
-    print(f"\t{"="*21}\n\tVALIDACION  DE  DATOS\n\t{"="*21}")
+    print(f"\t{"="*21}\n\t\033[1;91mVALIDACION  DE  DATOS\033[0m\n\t{"="*21}")
 
 borrar_consola()
 
