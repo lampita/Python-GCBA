@@ -8,7 +8,7 @@ def borrar_consola():
 
 borrar_consola()
 
-print("\033[1;91mGESTION DE USUARIOS\033[0m")
+print("\033[1;91mGESTION DE USUARIOS\033[0m".center(100))
 nombre=input("\nIngrese su nombre: ")
 edad=input("\nIngrese su edad: ")
 email=input("\nIngrese su email: ")

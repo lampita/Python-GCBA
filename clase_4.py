@@ -1,4 +1,4 @@
-frase="gmailco"
+mail=""
 
 # print(frase != "")
 # print(len(frase[0:(frase.find("@"))])>=1)
@@ -7,13 +7,22 @@ frase="gmailco"
 # print(frase.count("@")<=1)
 # print(frase.find(" ")==-1)
 
-mail_nombre=len(frase[0:(frase.find("@"))])
-mail_dominio=len(frase[frase.find("@"):frase.rfind(".")])
-mail_extension= len(frase)-frase.rfind(".")
 
-print("True") if mail_nombre >=1 else print("False")
-print("True") if mail_dominio >=3 else print("False")
-print("True") if mail_extension== 4 or  mail_extension== 3  else print("False")
+def check_mail(mail):
+    mail_nombre=len(mail[0:(mail.find("@"))])
+    mail_dominio=len(mail[mail.find("@"):mail.rfind(".")])
+    mail_extension= len(mail)-mail.rfind(".")
+
+    comprobacion_1= True if mail_nombre >=1 else False
+    comprobacion_2= True if mail_dominio >=3 else False
+    comprobacion_3= True if mail_extension== 4 or  mail_extension== 3  else False
+    
+    if comprobacion_1 and comprobacion_2 and comprobacion_3:
+         return True
+    else: 
+        return False
+
+print(check_mail(mail))
 
 
 
