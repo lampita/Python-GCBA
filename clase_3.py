@@ -1,5 +1,6 @@
 import os, time
 
+
 error="\033[31m ERROR! \033[0m"
 error_vacio="(campo vacio) 👎"
 error_menor="(menor de 18 anos) 👎"
@@ -31,7 +32,7 @@ apellido=input("\nIngrese su APELLIDO: ")
 borrar_consola()
 
 edad=(input("\nIngrese su EDAD: "))
-espera(4, 0.4)
+espera(4, 0.3)
 borrar_consola()
 
 if (nombre != ""):
@@ -65,7 +66,8 @@ borrar_consola()
 if valido==True:
     print(f"\n\nBIENVENIDO {nombre} {apellido}. Tienes {edad} años. Eres mayor de edad.\n\n\n\n FIN DE LA VALIDACION")
 else:
-    print(F"\n\nLo siento, no has sido validado correctamente.\n\n\n**FIN DE LA VALIDACION**\n\n\n\n")
+    print(f"\n\nLo siento, no has sido validado correctamente.\n\n\n\t{'*'*20}\n\tFIN DE LA VALIDACION\n\t{'*'*20}\n\n\n\n")
+
 
 
 
