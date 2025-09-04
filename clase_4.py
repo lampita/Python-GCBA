@@ -38,13 +38,13 @@ def borrar_consola(bread_crumb):
     print(f"\t{'=' * 21}\n\t\033[1;91mVALIDACION  DE  DATOS\033[0m\n\t{'=' * 21}")
     match bread_crumb:
         case 1:
-            print("Nombre")
-        case 2:
-            print("Nombre - Apellido")
-        case 3:
-            print("Nombre - Apellido - Edad")
-        case 4:
             print("Nombre - Apellido - Edad - Mail")
+        case 2:
+            print("Nombre\x1B[32m\u2714\x1B[0m - Apellido - Edad - Mail")
+        case 3:
+            print("Nombre\x1B[32m\u2714\x1B[0m- Apellido\x1B[32m\u2714\x1B[0m - Edad - Mail")
+        case 4:
+            print("Nombre\x1B[32m\u2714\x1B[0m - Apellido\x1B[32m\u2714\x1B[0m - Edad\x1B[32m\u2714\x1B[0m - Mail")
 
 
 borrar_consola(1)
