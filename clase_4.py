@@ -1,3 +1,5 @@
+import os
+
 valid_mail = False
 valid_edad = False
 
@@ -28,13 +30,33 @@ def check_edad(edad):
         return False
 
 
-nombre = input("Ingrese su nombre: ").capitalize()
-apellido = input("Ingrese su apellido: ").capitalize()
+def borrar_consola(bread_crumb):
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+    print(f"\t{'=' * 21}\n\t\033[1;91mVALIDACION  DE  DATOS\033[0m\n\t{'=' * 21}")
+    match bread_crumb:
+        case 1:
+            print("Nombre")
+        case 2:
+            print("Nombre - Apellido")
+        case 3:
+            print("Nombre - Apellido - Edad")
+        case 4:
+            print("Nombre - Apellido - Edad - Mail")
 
+
+borrar_consola(1)
+
+nombre = input("Ingrese su nombre: ").capitalize()
+borrar_consola(2)
+apellido = input("Ingrese su apellido: ").capitalize()
+borrar_consola(3)
 while not valid_edad:
     edad = input("Ingrese su edad: ")
     valid_edad = check_edad(edad)
-
+borrar_consola(4)
 while not valid_mail:
     mail = input("ingrese su mail: ")
     valid_mail = check_mail(mail)
