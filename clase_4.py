@@ -1,33 +1,50 @@
-mail=""
-
-# print(frase != "")
-# print(len(frase[0:(frase.find("@"))])>=1)
-# print("@" in frase)
-# print(frase.find("@",(frase.find("@")+1))==-1) 
-# print(frase.count("@")<=1)
-# print(frase.find(" ")==-1)
+valid_mail = False
+valid_edad = False
 
 
 def check_mail(mail):
-    mail_nombre=len(mail[0:(mail.find("@"))])
-    mail_dominio=len(mail[mail.find("@"):mail.rfind(".")])
-    mail_extension= len(mail)-mail.rfind(".")
+    mail_nombre = len(mail[0 : (mail.find("@"))])
+    mail_dominio = len(mail[mail.find("@") : mail.rfind(".")])
+    mail_extension = len(mail) - mail.rfind(".")
 
-    comprobacion_1= True if mail_nombre >=1 else False
-    comprobacion_2= True if mail_dominio >=3 else False
-    comprobacion_3= True if mail_extension== 4 or  mail_extension== 3  else False
-    
+    comprobacion_1 = True if mail_nombre >= 1 else False
+    comprobacion_2 = True if mail_dominio >= 3 else False
+    comprobacion_3 = True if mail_extension == 4 or mail_extension == 3 else False
+
     if comprobacion_1 and comprobacion_2 and comprobacion_3:
-         return True
-    else: 
+        print("mail correcto")
+        return True
+    else:
+        print("mail incorrecto")
         return False
 
-print(check_mail(mail))
+
+def check_edad(edad):
+    if edad.isdigit():
+        print("edad correcta")
+        return True
+    else:
+        print("edad incorrecta")
+        return False
 
 
+nombre = input("Ingrese su nombre: ").capitalize()
+apellido = input("Ingrese su apellido: ").capitalize()
 
-# Formatee correctamente los textos ingresados en “apellido” y “nombre”, convirtiendo la primera letra de cada palabra a mayúsculas y el resto en minúsculas.
+while not valid_edad:
+    edad = input("Ingrese su edad: ")
+    valid_edad = check_edad(edad)
 
-# Asegurarse que el correo electrónico no tenga espacios y contenga solo una “@”.
+while not valid_mail:
+    mail = input("ingrese su mail: ")
+    valid_mail = check_mail(mail)
 
-# Que clasifique por rango etario basándose en su edad (“Niño/a” para los menores de 15 años, “Adolescente” de 15 a 18 y “Adulto/a” para los mayores de 18 años.)
+estado = ""
+if int(edad) < 15:
+    estado = "Niño/a"
+elif int(edad) <= 18:
+    estado = "Adolescente"
+else:
+    estado = "Adulto/a"
+
+print(nombre, apellido, edad, mail, estado)
