@@ -14,19 +14,17 @@ def check_mail(mail):
     comprobacion_3 = True if mail_extension == 4 or mail_extension == 3 else False
 
     if comprobacion_1 and comprobacion_2 and comprobacion_3:
-        print("mail correcto")
         return True
     else:
-        print("mail incorrecto")
+        print("El mail ingresado no es válido. Intente nuevamente.")
         return False
 
 
 def check_edad(edad):
-    if edad.isdigit():
-        print("edad correcta")
+    if edad.isdigit() and int(edad) > 0 and int(edad) < 120:
         return True
     else:
-        print("edad incorrecta")
+        print("La edad ingresada no es válida. Intente nuevamente.")
         return False
 
 
@@ -38,20 +36,29 @@ def borrar_consola(bread_crumb):
     print(f"\t{'=' * 21}\n\t\033[1;91mVALIDACION  DE  DATOS\033[0m\n\t{'=' * 21}")
     match bread_crumb:
         case 1:
-            print("Nombre - Apellido - Edad - Mail")
+            print("Nombre  -  Apellido  -  Edad  -  Mail\n")
         case 2:
-            print("Nombre\x1B[32m\u2714\x1B[0m - Apellido - Edad - Mail")
+            print("Nombre \x1b[1;32m\u2714\x1b[0m - Apellido - Edad - Mail\n")
         case 3:
-            print("Nombre\x1B[32m\u2714\x1B[0m- Apellido\x1B[32m\u2714\x1B[0m - Edad - Mail")
+            print(
+                "Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad - Mail\n"
+            )
         case 4:
-            print("Nombre\x1B[32m\u2714\x1B[0m - Apellido\x1B[32m\u2714\x1B[0m - Edad\x1B[32m\u2714\x1B[0m - Mail")
+            print(
+                "Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad \x1b[1;32m\u2714\x1b[0m - Mail\n"
+            )
+        case 5:
+            print(
+                "Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad \x1b[1;32m\u2714\x1b[0m - Mail \x1b[1;32m\u2714\x1b[0m\n"
+            )
+            print("\nTodos los datos han sido validados correctamente.\n")
 
 
 borrar_consola(1)
 
-nombre = input("Ingrese su nombre: ").capitalize()
+nombre = input("Ingrese su nombre: ").capitalize().strip()
 borrar_consola(2)
-apellido = input("Ingrese su apellido: ").capitalize()
+apellido = input("Ingrese su apellido: ").capitalize().strip()
 borrar_consola(3)
 while not valid_edad:
     edad = input("Ingrese su edad: ")
@@ -60,6 +67,7 @@ borrar_consola(4)
 while not valid_mail:
     mail = input("ingrese su mail: ")
     valid_mail = check_mail(mail)
+borrar_consola(5)
 
 estado = ""
 if int(edad) < 15:
@@ -69,4 +77,13 @@ elif int(edad) <= 18:
 else:
     estado = "Adulto/a"
 
-print(nombre, apellido, edad, mail, estado)
+print("=" * 40)
+print(f'''\x1b[1mDATOS INGRESADOS:\x1b[0m
+\x1b[1mNombre:\x1b[0m {nombre}
+\x1b[1mApellido:\x1b[0m {apellido}
+\x1b[1mEdad:\x1b[0m {edad}
+\x1b[1mMail:\x1b[0m {mail}
+\x1b[1mEstado de mayoría:\x1b[0m {estado}''')
+print("=" * 40)
+
+
