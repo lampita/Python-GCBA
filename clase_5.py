@@ -2,6 +2,8 @@ import os
 
 valid_mail = False
 valid_edad = False
+valid_ingresos = False
+total_ingresos = 0
 
 
 def check_mail(mail):
@@ -33,24 +35,27 @@ def borrar_consola(bread_crumb):
         os.system("cls")
     else:
         os.system("clear")
+
     print(f"\t{'=' * 21}\n\t\033[1;91mVALIDACION  DE  DATOS\033[0m\n\t{'=' * 21}")
     match bread_crumb:
         case 1:
-            print("Nombre  -  Apellido  -  Edad  -  Mail\n")
+            print("Nombre  -  Apellido  -  Edad  -  Mail  -  Ingresos\n")
         case 2:
-            print("Nombre \x1b[1;32m\u2714\x1b[0m - Apellido - Edad - Mail\n")
+            print("Nombre \x1b[1;32m\u2714\x1b[0m - Apellido - Edad - Mail  -  Ingresos\n")
         case 3:
             print(
-                "Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad - Mail\n"
+                "Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad - Mail - Ingresos\n"
             )
         case 4:
             print(
-                "Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad \x1b[1;32m\u2714\x1b[0m - Mail\n"
+                "Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad \x1b[1;32m\u2714\x1b[0m - Mail - Ingresos\n"
             )
         case 5:
             print(
-                "Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad \x1b[1;32m\u2714\x1b[0m - Mail \x1b[1;32m\u2714\x1b[0m\n"
+                "Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad \x1b[1;32m\u2714\x1b[0m - Mail \x1b[1;32m\u2714\x1b[0m - Ingresos\n"
             )
+        case 6:
+            print("Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad \x1b[1;32m\u2714\x1b[0m - Mail \x1b[1;32m\u2714\x1b[0m - Ingresos \x1b[1;32m\u2714\x1b[0m\n")
             print("\nTodos los datos han sido validados correctamente.\n")
 
 
@@ -68,6 +73,13 @@ while not valid_mail:
     mail = input("ingrese su mail: ")
     valid_mail = check_mail(mail)
 borrar_consola(5)
+
+for i in range(6):
+    ingresos = input(f"Ingresos del mes: {i+1}")
+    if ingresos.isdigit():
+        total_ingresos += int(ingresos)
+
+print(f"Sus ingresos totales son: {total_ingresos}")
 
 estado = ""
 if int(edad) < 15:
