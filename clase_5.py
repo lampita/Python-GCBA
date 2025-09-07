@@ -29,6 +29,14 @@ def check_edad(edad):
         print("La edad ingresada no es válida. Intente nuevamente.")
         return False
 
+def check_ingresos(ingresos):
+    if ingresos.isdigit() and int(ingresos) > 0:
+        return True
+    else:
+        print("Dato ingresado no válido. Intente nuevamente.")
+        return False
+
+
 
 def borrar_consola(bread_crumb):
     if os.name == "nt":
@@ -39,7 +47,7 @@ def borrar_consola(bread_crumb):
     print(f"\t{'=' * 21}\n\t\033[1;91mVALIDACION  DE  DATOS\033[0m\n\t{'=' * 21}")
     match bread_crumb:
         case 1:
-            print("Nombre  -  Apellido  -  Edad  -  Mail  -  Ingresos\n")
+            print("Nombre - Apellido - Edad - Mail - Ingresos\n")
         case 2:
             print("Nombre \x1b[1;32m\u2714\x1b[0m - Apellido - Edad - Mail  -  Ingresos\n")
         case 3:
@@ -56,7 +64,7 @@ def borrar_consola(bread_crumb):
             )
         case 6:
             print("Nombre \x1b[1;32m\u2714\x1b[0m - Apellido \x1b[1;32m\u2714\x1b[0m - Edad \x1b[1;32m\u2714\x1b[0m - Mail \x1b[1;32m\u2714\x1b[0m - Ingresos \x1b[1;32m\u2714\x1b[0m\n")
-            print("\nTodos los datos han sido validados correctamente.\n")
+            print("\nTodos los datos han sido validados correctamente. \x1b[1;32m\u2714\x1b[0m\n")
 
 
 borrar_consola(1)
@@ -75,11 +83,13 @@ while not valid_mail:
 borrar_consola(5)
 
 for i in range(6):
-    ingresos = input(f"Ingresos del mes: {i+1}")
-    if ingresos.isdigit():
-        total_ingresos += int(ingresos)
-
-print(f"Sus ingresos totales son: {total_ingresos}")
+    while not valid_ingresos:
+        ingresos = input(f"Ingresos del mes {i+1}: ")
+        valid_ingresos = check_ingresos(ingresos)
+    total_ingresos += int(ingresos)
+    valid_ingresos = False
+    
+borrar_consola(6)
 
 estado = ""
 if int(edad) < 15:
@@ -95,5 +105,7 @@ print(f"""\x1b[1mDATOS INGRESADOS:\x1b[0m
 \x1b[1mApellido:\x1b[0m {apellido}
 \x1b[1mEdad:\x1b[0m {edad}
 \x1b[1mMail:\x1b[0m {mail}
-\x1b[1mEstado de mayoría:\x1b[0m {estado}""")
+\x1b[1mEstado de mayoría:\x1b[0m {estado}
+\x1b[1mTotal de ingresos:\x1b[0m ${total_ingresos}""")
 print("=" * 40)
+print('\n\n\n\n')
