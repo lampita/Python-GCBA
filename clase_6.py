@@ -34,6 +34,9 @@ nombres_a_filtrar = [
     "",
     "Ana    López",
     "Pedro 123",
+    "Luis",
+    "María García",
+    "PedroPa lmieri",
     "Carlos",
     "María",
     "Elisa 45",
@@ -42,6 +45,7 @@ nombres_a_filtrar = [
     "   Andrés  García  ",
     "   2255  ",
     " pere$ andres",
+    "Car Los"
 ]
 
 nombres_validos, nombres_invalidos = filtrar_nombres(nombres_a_filtrar)
@@ -131,7 +135,7 @@ while not salir:
                 tag = input(" Es valido?: ").lower()
                 print("\x1b[1A\x1b[2K" + "" * 50, end="\r")
 
-                if tag == "s":
+                if tag == "n":
                     nombres_invalidos.append((nombre, "Extraido de Validos"))
 
                     nombres_validos.pop(i)
