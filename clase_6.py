@@ -64,40 +64,44 @@ while not salir:
     print(
         f"\t{'=' * 35}\n\t\033[1;91mVALIDACION  DE  LISTAS  DE NOMBRES\033[0m\n\t{'=' * 35}"
     )
-    print("Lista a Procesar: nombres_a_filtrar")
+    print("\nArchivo a Procesar: nombres_a_filtrar")
     print(f"Total de Clientes: \033[1;37m{len(nombres_a_filtrar)}\033[1;0m")
     print(
         f"Validos\033[1;32m{conv_to_super(len(nombres_validos))}\033[1;0m-Invalidos\033[1;91m{conv_to_super(len(nombres_invalidos))}\033[1;0m"
     )
-    print("""MENU DE OPCIONES:
+    print("""\nMENU DE OPCIONES:
     1. Mostrar lista Completa
-    2. Mostrar Lista Validos
-    3. Mostrar Lista Invalidos
-    4. Proceso Manual Invalidos
-    5. Proceso Manual Validos
-    6. Salir""")
+    2. Mostrar Lista de Válidos
+    3. Mostrar Lista de Inválidos
+    4. Procesar Manualemente Inválidos
+    5. Procesar Manualmente Válidos
+    6. Salir\n""")
 
-    opcion_menu = input("Ingresar opcion:")
+    opcion_menu = input("Ingresar opcion:  ")
+    print()
     match opcion_menu:
         case "1":
+            print("\nLista Completa de Nombres:\n")
             for i, nombre in enumerate(nombres_a_filtrar, start=1):
                 print(i, nombre)
-            input("Enter para volver al menu")
+            input("\nENTER para volver al menu ")
             continue
 
         case "2":
+            print("\nLista de Nombres Válidos:\n")
             for i, nombre in enumerate(nombres_validos, start=1):
                 print(i, nombre)
-            input("Enter para volver al menu")
+            input("\nENTER para volver al menu ")
             continue
 
         case "3":
+            print("\nLista de Nombres Inválidos:\n")
             for (
                 i,
                 nombre,
             ) in enumerate(nombres_invalidos, start=1):
                 print(f'{i:<5}"{nombre[0] + '"':<40}->{nombre[1]:<40}')
-            input("Enter para volver al menu")
+            input("\nENTER para volver al menu ")
             continue
         case "4":
             print("Seleccione s(si), n(no) o termina(t)")
@@ -119,7 +123,7 @@ while not salir:
                 else:
                     i += 1
 
-            input("Enter para volver al menu")
+            input("\nENTER para volver al menu ")
             continue
         case "5":
             print("Seleccione s(si), n(no) o termina(t)")
@@ -141,7 +145,8 @@ while not salir:
                 else:
                     i += 1
 
-            input("Enter para volver al menu")
+            input("\nENTER para volver al menu ")
             continue
         case "6":
+            print("Saliendo...")
             salir = True
