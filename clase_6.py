@@ -45,7 +45,7 @@ nombres_a_filtrar = [
     "   Andrés  García  ",
     "   2255  ",
     " pere$ andres",
-    "Car Los"
+    "Car los"
 ]
 
 nombres_validos, nombres_invalidos = filtrar_nombres(nombres_a_filtrar)
