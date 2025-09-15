@@ -95,7 +95,12 @@ while not salir:
             input("\nPresione ENTER para volver al menú...")
         
         case "4":
-            ...
+            lista_ordenada_por_nombre = sorted(lista_de_nombres, key=lambda x: x[1])
+            for i, nombre_completo in enumerate(
+                lista_ordenada_por_nombre, start=1
+            ):
+                print(f"{i}. {nombre_completo[1]}, {nombre_completo[2]}")
+            input("\nPresione ENTER para volver al menú...")
         case "5":
             print("Saliendo...\n\n")
             salir = True
