@@ -1,5 +1,15 @@
 import os, datetime
-import colorama
+
+try:
+    import colorama
+    import rich
+
+except ImportError:
+    print(
+        "El módulo 'oolorama' o el módulo 'rich' no está instalados. Por favor, instálalo con: pip install colorama rich"
+    )
+    exit()
+
 from rich.console import Console
 from rich.table import Table
 
@@ -94,7 +104,7 @@ while not salir:
             table = Table(title="Lista Ordenada por Apellido")
             table.add_column("Orden", justify="center", style="green4", no_wrap=True)
             table.add_column(
-                "Fecha", justify="center", style="turquoise4", no_wrap=True
+                "Fecha de Registro", justify="center", style="turquoise4", no_wrap=True
             )
             table.add_column("Apellido", style="blue3 bold", no_wrap=True)
             table.add_column("Nombre", style="blue3", no_wrap=True)
@@ -115,9 +125,28 @@ while not salir:
             input("\nPresione ENTER para volver al menú...")
 
         case "4":
-            lista_ordenada_por_nombre = sorted(lista_de_nombres, key=lambda x: x[1])
+            table = Table(title="Lista Ordenada por Nombre")
+            table.add_column("Orden", justify="center", style="green4", no_wrap=True)
+            table.add_column(
+                "Fecha de Registro", justify="center", style="turquoise4", no_wrap=True
+            )
+            table.add_column("Nombre", style="blue3 bold", no_wrap=True)
+            table.add_column("Apellido", style="blue3", no_wrap=True)
+            
+            lista_ordenada_por_nombre = sorted(lista_de_nombres, key=lambda x: x[2])
             for i, nombre_completo in enumerate(lista_ordenada_por_nombre, start=1):
-                print(f"{i}. {nombre_completo[1]} {nombre_completo[2]}")
+                #print(f"{i}. {nombre_completo[1]} {nombre_completo[2]}")
+                                table.add_row(
+                    f"{i}",
+                    f"{nombre_completo[0]}",
+                    f"{nombre_completo[1]}",
+                    f"{nombre_completo[2]}",
+                )
+
+            console = Console()
+            console.print(table)
+
+
             input("\nPresione ENTER para volver al menú...")
         case "5":
             print("Saliendo...\n\n")

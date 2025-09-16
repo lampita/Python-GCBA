@@ -30,3 +30,4 @@ print(f"\t+{' ' * 4}\033[1;30mEdad:\033[0m {edad} años{relleno_edad}+")
 print(f"\t+{' ' * 4}\033[1;30mmail:\033[0m {email}{relleno_mail}+")
 print(f"\t+{cierre}+")
 print(f"\t+{h_bar}+\n\n\n\n")
+
