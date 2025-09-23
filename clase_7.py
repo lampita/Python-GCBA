@@ -30,6 +30,7 @@ def nombre_es_valido(nombre):
     return " ✔️\n", True
 
 
+
 salir = False
 while not salir:
     if os.name == "nt":
