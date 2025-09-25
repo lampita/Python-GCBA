@@ -14,54 +14,18 @@ import os
 from datetime import datetime, timedelta
 from base_datos import inventario_supermercado as invt
 
+
+def borrar_consola():
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+
+
 console = Console()
+hoy = datetime.now().date()
 umbral_stock_critico = 50
 umbral_vencimiento_critico = 5
-
-hoy = datetime.now().date()
-dias_umbral = timedelta(days=umbral_vencimiento_critico)
-fecha_limite = hoy + dias_umbral
-
-vencimiento_critico = {
-    k: v
-    for (k, v) in invt.items()
-    if v["fecha_de_vencimiento"] != "N/A"
-    and v["cantidad_unidades_en_stock"] > 0
-    and hoy
-    <= datetime.strptime(v["fecha_de_vencimiento"], "%Y-%m-%d").date()
-    <= fecha_limite
-}
-vencidos = {
-    k: v
-    for (k, v) in invt.items()
-    if v["fecha_de_vencimiento"] != "N/A"
-    and v["cantidad_unidades_en_stock"] > 0
-    and hoy > datetime.strptime(v["fecha_de_vencimiento"], "%Y-%m-%d").date()
-}
-
-stock_critico = {
-    k: v
-    for (k, v) in invt.items()
-    if v["cantidad_unidades_en_stock"] < umbral_stock_critico
-    and v["cantidad_unidades_en_stock"] > 0
-}
-sin_stock = {k: v for (k, v) in invt.items() if v["cantidad_unidades_en_stock"] == 0}
-
-total_de_marcas = len(invt)
-
-total_de_unidades = sum(v["cantidad_unidades_en_stock"] for v in invt.values())
-
-total_de_vencidos = len(vencidos)
-
-total_vencimiento_critico = len(vencimiento_critico)
-
-total_sin_stock = len(sin_stock)
-
-total_stock_critico = len(stock_critico)
-
-
-
-
 
 
 def conv_to_super(n):
@@ -76,16 +40,55 @@ def conv_to_super(n):
 
 salir = False
 while not salir:
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
+    borrar_consola()
+
+    dias_umbral = timedelta(days=umbral_vencimiento_critico)
+    fecha_limite = hoy + dias_umbral
+
+    vencimiento_critico = {
+        k: v
+        for (k, v) in invt.items()
+        if v["fecha_de_vencimiento"] != "N/A"
+        and v["cantidad_unidades_en_stock"] > 0
+        and hoy
+        <= datetime.strptime(v["fecha_de_vencimiento"], "%Y-%m-%d").date()
+        <= fecha_limite
+    }
+    vencidos = {
+        k: v
+        for (k, v) in invt.items()
+        if v["fecha_de_vencimiento"] != "N/A"
+        and v["cantidad_unidades_en_stock"] > 0
+        and hoy > datetime.strptime(v["fecha_de_vencimiento"], "%Y-%m-%d").date()
+    }
+
+    stock_critico = {
+        k: v
+        for (k, v) in invt.items()
+        if v["cantidad_unidades_en_stock"] < umbral_stock_critico
+        and v["cantidad_unidades_en_stock"] > 0
+    }
+    sin_stock = {
+        k: v for (k, v) in invt.items() if v["cantidad_unidades_en_stock"] == 0
+    }
+
+    total_de_lotes = len(invt)
+
+    total_de_unidades = sum(v["cantidad_unidades_en_stock"] for v in invt.values())
+
+    total_de_vencidos = len(vencidos)
+
+    total_vencimiento_critico = len(vencimiento_critico)
+
+    total_sin_stock = len(sin_stock)
+
+    total_stock_critico = len(stock_critico)
 
     print(
         f"\t{'=' * 31}\n\t[bold red]CONTROL DE STOCK Y VENCIMIENTOS[/bold red]\n\t{'=' * 31}"
     )
 
-    print(f"Total de Marcas: [bold red]{total_de_marcas}[/bold red]")
+    print(f"Total de Lotes: [bold red]{total_de_lotes}[/bold red]")
     print(f"Total de Unidades: [bold red]{total_de_unidades}[/bold red]")
     print(
         f"Validas[bold green]{conv_to_super(total_de_unidades - (total_de_vencidos + total_vencimiento_critico))}[/bold green] Criticas[bold yellow]{conv_to_super(total_vencimiento_critico)}[/bold yellow] Vencidas[bold red]{conv_to_super(total_de_vencidos)}[/bold red]"
@@ -95,8 +98,8 @@ while not salir:
     )
 
     print("""\nMENU DE OPCIONES:
-    1. Mostrar lista Completa
-    2. Mostrar Lista de Válidos
+    1. Cambiar umbrales de stock y vencimiento.
+    2. Mostrar Total de Lotes
     3. Mostrar Lista de Inválidos
     4. Procesar Manualemente Inválidos
     5. Procesar Manualmente Válidos
@@ -106,9 +109,21 @@ while not salir:
     print()
     match opcion_menu:
         case "1":
-            print("\nLista Completa de Nombres:\n")
-            for i, nombre in enumerate(nombres_a_filtrar, start=1):
-                print(i, "\t", nombre)
+            umbral_vencimiento_critico = int(
+                input(
+                    "Ingrese umbral de vencimiento critico: (actual: "
+                    + str(umbral_vencimiento_critico)
+                    + " )"
+                )
+            )
+            umbral_stock_critico = int(
+                input(
+                    "Ingrese umbral de stock critico (actual: "
+                    + str(umbral_stock_critico)
+                    + ") : "
+                )
+            )
+
             input("\nENTER para volver al menu ")
             continue
 
