@@ -4,7 +4,7 @@ inventario_supermercado = {
         "nombre_fantasia": "Bananas Tropicales",
         "fecha_de_compra": "2025-09-15",
         "pais_de_origen": "Ecuador",
-        "fecha_de_vencimiento": "2025-09-28",
+        "fecha_de_vencimiento": "2025-09-20",
         "cantidad_unidades_en_stock": 150,
         "precio": 1.99,
         "pequena_descripcion": "Bananas de la variedad Cavendish, dulces y cremosas, ideales para un snack saludable o postres.",
