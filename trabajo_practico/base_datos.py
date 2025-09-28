@@ -333,3 +333,9 @@ inventario_supermercado = {
 
 # print(nested_dict)
 
+
+for v in inventario_supermercado.values():
+    if "banana" in v["producto"].lower():
+        print( v)
+        
+

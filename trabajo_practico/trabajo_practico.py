@@ -9,7 +9,9 @@ except ImportError:
 
 from rich.console import Console
 from rich.table import Table
+from rich.text import Text
 import os
+
 from datetime import datetime, timedelta
 from base_datos import inventario_supermercado as invt
 
@@ -42,12 +44,16 @@ def num_es_valido(num):
     global umbral_vencimiento_critico
 
     if not num.strip():
-        print("❌ ->Dato Vacío -> No se modifico el valor.\n")
-        return umbral_stock_critico, umbral_vencimiento_critico
+        return (
+            umbral_stock_critico,
+            umbral_vencimiento_critico,
+        ), "❌ ->Dato Vacío -> No se modifico el valor.\n"
 
     if any(not num.isdigit() for num in num):
-        print("❌ ->Dato Invalido -> No se modifico el valor.\n")
-        return umbral_stock_critico, umbral_vencimiento_critico
+        return (
+            umbral_stock_critico,
+            umbral_vencimiento_critico,
+        ), "❌ ->Dato Vacío -> No se modifico el valor.\n"
 
     else:
         return int(num), "✔️\n"
@@ -136,6 +142,11 @@ while not salir:
             umbral_stock_critico, check = num_es_valido(input())
             if check == "✔️\n":
                 console.print(check, end="")
+            else:
+                print(check)
+                umbral_stock_critico = umbral_stock_critico[
+                    0
+                ]  ### revisar esto. Muy feo
 
             console.print(
                 "Ingrese Umbral Vencimiento. [i]Actual[/i] "
@@ -147,6 +158,11 @@ while not salir:
             umbral_vencimiento_critico, check = num_es_valido(input())
             if check == "✔️\n":
                 console.print(check, end="")
+            else:
+                print(check)
+                umbral_vencimiento_critico = umbral_vencimiento_critico[
+                    1
+                ]  ### revisar esto. Muy feo
 
             input("\nENTER para volver al menu ")
             continue
@@ -155,14 +171,16 @@ while not salir:
             borrar_consola()
 
             table = Table(title="Lotes en Registro")
-            table.add_column("Lote", justify="left", style="dark_olive_green1", no_wrap=True)
-            table.add_column("SKU", justify="left", style="dark_turquoise ", no_wrap=True)
+            table.add_column(
+                "Lote", justify="left", style="dark_olive_green1", no_wrap=True
+            )
+            table.add_column(
+                "SKU", justify="left", style="dark_turquoise ", no_wrap=True
+            )
             table.add_column(
                 "Producto", justify="left", style="turquoise4", no_wrap=True
             )
-            table.add_column(
-                "Origen", justify="left", style="green4", no_wrap=True
-            )
+            table.add_column("Origen", justify="left", style="green4", no_wrap=True)
             table.add_column(
                 "Fecha de Vencimiento",
                 justify="right",
@@ -170,7 +188,10 @@ while not salir:
                 no_wrap=True,
             )
             table.add_column(
-                "Unidades en Stock", justify="right", style="steel_blue bold", no_wrap=True
+                "Unidades en Stock",
+                justify="right",
+                style="steel_blue bold",
+                no_wrap=True,
             )
             table.add_column(
                 "Precio", justify="right", style="wheat4 bold", no_wrap=True
@@ -178,10 +199,13 @@ while not salir:
 
             for k, v in invt.items():
                 unidades = v["cantidad_unidades_en_stock"]
-                fechas=v['fecha_de_vencimiento']
+                fechas = v["fecha_de_vencimiento"]
 
-
-                if unidades != "N/A" and unidades  <= umbral_stock_critico and unidades > 0:
+                if (
+                    unidades != "N/A"
+                    and unidades <= umbral_stock_critico
+                    and unidades > 0
+                ):
                     stock_con_estilo = (
                         f"[yellow bold blink]{unidades}[/bold yellow blink]"
                     )
@@ -190,12 +214,21 @@ while not salir:
 
                 else:
                     stock_con_estilo = f"{unidades}"
-                
-                if fechas != "N/A" and hoy <= datetime.strptime(fechas, "%Y-%m-%d").date() <= fecha_limite:
+
+                if (
+                    fechas != "N/A"
+                    and hoy
+                    <= datetime.strptime(fechas, "%Y-%m-%d").date()
+                    <= fecha_limite
+                ):
                     fecha_con_estilo = (
                         f"[yellow bold blink]{fechas}[/bold yellow blink]"
                     )
-                elif fechas != "N/A" and hoy > datetime.strptime(v["fecha_de_vencimiento"], "%Y-%m-%d").date():
+                elif (
+                    fechas != "N/A"
+                    and hoy
+                    > datetime.strptime(v["fecha_de_vencimiento"], "%Y-%m-%d").date()
+                ):
                     fecha_con_estilo = f"[red bold blink]{fechas}[/bold red blink]"
 
                 else:
@@ -219,6 +252,82 @@ while not salir:
             continue
 
         case "3":
+            borrar_consola()
+            query = input("ingrese busqueda: ").lower().strip()
+            print()
+
+            table = Table(title="Busqueda. Palabra clave: " + query)
+            table.add_column("Lote", justify="left")
+            table.add_column("SKU", justify="left")
+            table.add_column("Producto", justify="left")
+            table.add_column("Marca", justify="left")
+            table.add_column("Comprado", justify="right")
+            table.add_column("Origen", justify="left")
+            table.add_column("Vence", justify="right")
+            table.add_column("Stock", justify="right")
+            table.add_column("Precio", justify="right")
+            table.add_column("Descripción", justify="left")
+
+            
+            for k, v in invt.items():
+                if (
+                    query in k[0].lower()
+                    or query in k[1].lower()
+                    or query in v["producto"].lower()
+                    or query in v["nombre_fantasia"].lower()
+                    or query in v["pais_de_origen"].lower()
+                    or query in v["fecha_de_vencimiento"].lower()
+                    or query in str(v["cantidad_unidades_en_stock"]).lower()
+                    or query in str(v["precio"]).lower()
+                    or query in v["pequena_descripcion"].lower()
+                ):
+
+                    lote=Text(str(k[1]))
+                    lote.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    
+                    sku=Text(str(k[0]))
+                    sku.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    
+                    producto = Text(str(v["producto"]))
+                    producto.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    
+                    marca=Text(str(v["nombre_fantasia"]))
+                    marca.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    
+                    comprado=Text(str(v["fecha_de_compra"]))
+                    comprado.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    
+                    origen=Text(str(v["pais_de_origen"]))
+                    origen.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    
+                    vence=Text(str(v["fecha_de_vencimiento"]))
+                    vence.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    
+                    stock=Text(str(v["cantidad_unidades_en_stock"]))
+                    stock.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    
+                    precio=Text(str(v["precio"]))
+                    precio.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    
+                    descripcion=Text(str(v["pequena_descripcion"]))
+                    descripcion.highlight_words([query], style="bold yellow", case_sensitive=False)
+
+                    table.add_row(
+                        lote,
+                        sku,
+                        producto,
+                        marca,
+                        comprado,
+                        origen,
+                        vence,
+                        stock,
+                        precio,
+                        descripcion
+                    )
+
+            console.print(table)
+
+            input("\nENTER para volver al menu ")
             continue
         case "4":
             continue
