@@ -4,7 +4,7 @@ inventario_supermercado = {
         "nombre_fantasia": "Bananas Tropicales",
         "fecha_de_compra": "2025-09-15",
         "pais_de_origen": "Ecuador",
-        "fecha_de_vencimiento": "2025-09-28",
+        "fecha_de_vencimiento": "2025-09-20",
         "cantidad_unidades_en_stock": 150,
         "precio": 1.99,
         "pequena_descripcion": "Bananas de la variedad Cavendish, dulces y cremosas, ideales para un snack saludable o postres.",
@@ -274,7 +274,7 @@ inventario_supermercado = {
         "nombre_fantasia": "Miel Natural Delicia",
         "fecha_de_compra": "2025-09-28",
         "pais_de_origen": "México",
-        "fecha_de_vencimiento": "2028-04-01",
+        "fecha_de_vencimiento": "2025-09-28",
         "cantidad_unidades_en_stock": 55,
         "precio": 6.50,
         "pequena_descripcion": "Miel de abeja 100% natural, sin conservantes. Ideal para endulzar postres, bebidas o tostadas.",
@@ -284,7 +284,7 @@ inventario_supermercado = {
         "nombre_fantasia": "Pasta Dientes Sonrisa",
         "fecha_de_compra": "2025-09-13",
         "pais_de_origen": "Brasil",
-        "fecha_de_vencimiento": "2027-10-01",
+        "fecha_de_vencimiento": "2025-09-28",
         "cantidad_unidades_en_stock": 80,
         "precio": 3.75,
         "pequena_descripcion": "Pasta de dientes con flúor. Sabor menta fresca para una limpieza completa.",
@@ -294,13 +294,42 @@ inventario_supermercado = {
         "nombre_fantasia": "Shampoo Pelo Limpio",
         "fecha_de_compra": "2025-09-12",
         "pais_de_origen": "México",
-        "fecha_de_vencimiento": "2025-09-22",
+        "fecha_de_vencimiento": "2025-09-28",
         "cantidad_unidades_en_stock": 1,
         "precio": 5.90,
         "pequena_descripcion": "Shampoo de 400ml, formulado para eliminar y prevenir la caspa. Deja el cabello suave y sin residuos.",
     },
 }
 
-prueba={k:v  for (k,v) in inventario_supermercado.items() if "México" in v["pais_de_origen"]}#     print(f"{k} : {v.get('producto','No disponible')} - ${v.get('precio',0.0)}")
-# print(inventario_supermercado.get("CUIDADO-PAS-02",{}).get("producto",0.0))
-print(len(prueba))
+
+# a=inventario_supermercado
+# a['CUIDADO-SHA-030']['producto']='shampoo'
+# del a['CUIDADO-SHA-030']['fecha_de_compra']
+# a.keys(), a.values(), a.items()
+# a['CUIDADO-SHA-030'].items()
+# a['CUIDADO-SHA-030'].update({'producto':'Shampoo Pedorro'})
+# print(a['CUIDADO-SHA-030'].setdefault('producto','Shampoo Siempre graso'))
+
+# print(a['CUIDADO-SHA-030'].items())
+# print(a['CUIDADO-SHA-030'].get('producto'))
+
+
+########dict_variable = {key:value for (key,value) in dictonary.items()}
+# x={key:value for (key,value) in a['CUIDADO-SHA-030'].items()}
+# print(x)
+# print(a['CUIDADO-SHA-030'])
+# dict1_cond = {k:v for (k,v) in a.items() if v['cantidad_unidades_en_stock'] < 50}
+
+# print( dict1_cond.keys())
+
+# nested_dict = {'first':{'a':1}, 'second':{'b':2}}
+# float_dict = {outer_k: {float(inner_v) for (inner_k, inner_v) in outer_v.items()} for (outer_k, outer_v) in nested_dict.items()}
+# print(float_dict)
+
+# for (outer_k, outer_v) in nested_dict.items():
+#     for (inner_k, inner_v) in outer_v.items():
+#         outer_v.update({inner_k: float(inner_v)})
+# nested_dict.update({outer_k:outer_v})
+
+# print(nested_dict)
+
