@@ -301,10 +301,6 @@ inventario_supermercado = {
     },
 }
 
-prueba=[]
-for k,v in inventario_supermercado.items():
-    if v.get('cantidad_unidades_en_stock',0) == 60:
-        prueba.append((k,v['producto']))
-print(prueba[0][1])
-#     print(f"{k} : {v.get('producto','No disponible')} - ${v.get('precio',0.0)}")
+prueba={k:v  for (k,v) in inventario_supermercado.items() if "México" in v["pais_de_origen"]}#     print(f"{k} : {v.get('producto','No disponible')} - ${v.get('precio',0.0)}")
 # print(inventario_supermercado.get("CUIDADO-PAS-02",{}).get("producto",0.0))
+print(len(prueba))

@@ -59,11 +59,6 @@ total_sin_stock = len(sin_stock)
 
 total_stock_critico = len(stock_critico)
 
-
-
-
-
-
 def conv_to_super(n):
     super = list(map(chr, [8304, 185, 178, 179, 8308, 8309, 8310, 8311, 8312, 8313]))
     st = ""
