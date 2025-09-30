@@ -141,7 +141,7 @@ while not salir:
 
             umbral_stock_critico, check = num_es_valido(input())
             if check == "✔️\n":
-                console.print(check, end="")
+                console.print(check, end="✔️\n")
             else:
                 print(check)
                 umbral_stock_critico = umbral_stock_critico[
@@ -330,8 +330,46 @@ while not salir:
             input("\nENTER para volver al menu ")
             continue
         case "4":
+            borrar_consola()
+            console.print("[bold underline]Agregar un Lote[/bold underline]\n")
+            sku = input("Ingrese SKU: ").strip()
+            producto = input("Ingrese Nombre del Producto: ").strip()
+            nombre_fantasia = input("Ingrese Nombre de Fantasia (Marca): ").strip()
+            pais_de_origen = input("Ingrese Pais de Origen: ").strip()
+            fecha_de_compra = input("Ingrese Fecha de Compra (YYYY-MM-DD): ").strip()
+            fecha_de_vencimiento = input("Ingrese Fecha de Vencimiento (YYYY-MM-DD): ").strip()
+            cantidad_unidades_en_stock = input("Ingrese Cantidad de Unidades en Stock: ").strip()
+            precio = input("Ingrese Precio por Unidad: ").strip()
+            pequena_descripcion = input("Ingrese Pequeña Descripción: ").strip()
+            lote = (sku, f"L{len(invt) + 1:03d}")
+            invt[lote] = {
+                "producto": producto,
+                "nombre_fantasia": nombre_fantasia,
+                "pais_de_origen": pais_de_origen,
+                "fecha_de_compra": fecha_de_compra,
+                "fecha_de_vencimiento": fecha_de_vencimiento,
+                "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
+                "precio": float(precio),
+                "pequena_descripcion": pequena_descripcion,
+            }
+            console.print("\nLote agregado exitosamente!\n")
+
+
+            input("\nENTER para volver al menu ")
             continue
         case "5":
+            borrar_consola()
+            console.print("[bold underline]Eliminar un Lote[/bold underline]\n")
+            sku = input("Ingrese SKU: ").strip()
+            lote_id = input("Ingrese ID del Lote (e.g., L001): ").strip()
+            lote = (sku, lote_id)
+            if lote in invt:
+                del invt[lote]
+                console.print("\nLote eliminado exitosamente!\n")
+            else:
+                console.print("\nLote no encontrado.\n")
+
+            input("\nENTER para volver al menu ")
             continue
         case "6":
             console.print("Saliendo...\n")
@@ -355,3 +393,4 @@ while not salir:
 #         print(f"SKU: {sku}")
 #         print(f"Vence el: {fecha_vencimiento}")
 #         print(f"Descripción: {datos_producto['pequena_descripcion']}\n")
+
