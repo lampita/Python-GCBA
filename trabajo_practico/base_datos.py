@@ -333,3 +333,18 @@ inventario_supermercado = {
 
 # print(nested_dict)
 
+ultima_clave = list(inventario_supermercado.keys())[-1]
+
+def agregar_ultima_clave(clave):
+    penultimo_lote = []
+    for caracter in clave[::-1]:
+        if caracter.isdigit():
+            penultimo_lote.append(caracter)
+        else:
+            break
+    penultimo_lote.reverse()
+    ultima_clave = "".join(penultimo_lote)
+    ultima_clave = str(int(ultima_clave)+1)
+    return "LOTE-"+ ultima_clave
+
+print(agregar_ultima_clave(ultima_clave[1]))

@@ -393,3 +393,4 @@ while not salir:
 #         print(f"SKU: {sku}")
 #         print(f"Vence el: {fecha_vencimiento}")
 #         print(f"Descripción: {datos_producto['pequena_descripcion']}\n")
+
