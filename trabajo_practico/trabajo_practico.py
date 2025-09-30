@@ -32,29 +32,24 @@ umbral_vencimiento_critico = 5
 def conv_to_super(n):
     super = list(map(chr, [8304, 185, 178, 179, 8308, 8309, 8310, 8311, 8312, 8313]))
     st = ""
-
     for i in str(n):
         st += super[int(i)]
-
     return st
 
 
 def num_es_valido(num):
     global umbral_stock_critico
     global umbral_vencimiento_critico
-
     if not num.strip():
         return (
             umbral_stock_critico,
             umbral_vencimiento_critico,
         ), "❌ ->Dato Vacío -> No se modifico el valor.\n"
-
     if any(not num.isdigit() for num in num):
         return (
             umbral_stock_critico,
             umbral_vencimiento_critico,
-        ), "❌ ->Dato Vacío -> No se modifico el valor.\n"
-
+        ), "❌ ->Dato Erroneo -> No se modifico el valor.\n"
     else:
         return int(num), "✔️\n"
 
@@ -62,7 +57,6 @@ def num_es_valido(num):
 salir = False
 while not salir:
     borrar_consola()
-
     dias_umbral = timedelta(days=umbral_vencimiento_critico)
     fecha_limite = hoy + dias_umbral
 
@@ -94,24 +88,17 @@ while not salir:
     }
 
     total_de_lotes = len(invt)
-
     total_de_unidades = sum(v["cantidad_unidades_en_stock"] for v in invt.values())
-
     total_de_vencidos = len(vencidos)
-
     total_vencimiento_critico = len(vencimiento_critico)
-
     total_sin_stock = len(sin_stock)
-
     total_stock_critico = len(stock_critico)
 
     console.print(
         f"\t{'=' * 31}\n\t[bold red]CONTROL DE STOCK Y VENCIMIENTOS[/bold red]\n\t{'=' * 31}"
     )
-
     console.print(f"Total de Unidades: [black]{total_de_unidades}[/black]")
-    console.print(f"Total de Lotes en Registro: [black]{total_de_lotes}[/black]")
-
+    console.print(f"Total de Lotes en Registro: [black]{total_de_lotes}[/black]\n")
     console.print(
         f"Total Lotes[bold green]{conv_to_super(total_de_lotes)}[/bold green] Stock Critico[bold yellow]{conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{conv_to_super(total_sin_stock)}[/bold red]"
     )
@@ -141,15 +128,13 @@ while not salir:
 
             umbral_stock_critico, check = num_es_valido(input())
             if check == "✔️\n":
-                console.print(check, end="")
+                console.print(f"-> Umbral Modificado en {umbral_stock_critico} ", end= check)## revisar.
             else:
                 print(check)
-                umbral_stock_critico = umbral_stock_critico[
-                    0
-                ]  ### revisar esto. Muy feo
+                umbral_stock_critico = umbral_stock_critico[0]  ##revisar
 
             console.print(
-                "Ingrese Umbral Vencimiento. [i]Actual[/i] "
+                "\nIngrese Umbral Vencimiento. [i]Actual[/i] "
                 + "([i]"
                 + str(umbral_vencimiento_critico)
                 + "[/i]): ",
@@ -157,12 +142,10 @@ while not salir:
             )
             umbral_vencimiento_critico, check = num_es_valido(input())
             if check == "✔️\n":
-                console.print(check, end="")
+                console.print(f"-> Umbral Modificado en {umbral_vencimiento_critico} ", end= check)## revisar.
             else:
-                print(check)
-                umbral_vencimiento_critico = umbral_vencimiento_critico[
-                    1
-                ]  ### revisar esto. Muy feo
+                console.print(check)
+                umbral_vencimiento_critico = umbral_vencimiento_critico[1]  ## revisar.
 
             input("\nENTER para volver al menu ")
             continue
@@ -268,7 +251,6 @@ while not salir:
             table.add_column("Precio", justify="right")
             table.add_column("Descripción", justify="left")
 
-            
             for k, v in invt.items():
                 if (
                     query in k[0].lower()
@@ -281,36 +263,55 @@ while not salir:
                     or query in str(v["precio"]).lower()
                     or query in v["pequena_descripcion"].lower()
                 ):
+                    lote = Text(str(k[1]))
+                    lote.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
 
-                    lote=Text(str(k[1]))
-                    lote.highlight_words([query], style="bold yellow", case_sensitive=False)
-                    
-                    sku=Text(str(k[0]))
-                    sku.highlight_words([query], style="bold yellow", case_sensitive=False)
-                    
+                    sku = Text(str(k[0]))
+                    sku.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
+
                     producto = Text(str(v["producto"]))
-                    producto.highlight_words([query], style="bold yellow", case_sensitive=False)
-                    
-                    marca=Text(str(v["nombre_fantasia"]))
-                    marca.highlight_words([query], style="bold yellow", case_sensitive=False)
-                    
-                    comprado=Text(str(v["fecha_de_compra"]))
-                    comprado.highlight_words([query], style="bold yellow", case_sensitive=False)
-                    
-                    origen=Text(str(v["pais_de_origen"]))
-                    origen.highlight_words([query], style="bold yellow", case_sensitive=False)
-                    
-                    vence=Text(str(v["fecha_de_vencimiento"]))
-                    vence.highlight_words([query], style="bold yellow", case_sensitive=False)
-                    
-                    stock=Text(str(v["cantidad_unidades_en_stock"]))
-                    stock.highlight_words([query], style="bold yellow", case_sensitive=False)
-                    
-                    precio=Text(str(v["precio"]))
-                    precio.highlight_words([query], style="bold yellow", case_sensitive=False)
-                    
-                    descripcion=Text(str(v["pequena_descripcion"]))
-                    descripcion.highlight_words([query], style="bold yellow", case_sensitive=False)
+                    producto.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
+
+                    marca = Text(str(v["nombre_fantasia"]))
+                    marca.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
+
+                    comprado = Text(str(v["fecha_de_compra"]))
+                    comprado.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
+
+                    origen = Text(str(v["pais_de_origen"]))
+                    origen.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
+
+                    vence = Text(str(v["fecha_de_vencimiento"]))
+                    vence.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
+
+                    stock = Text(str(v["cantidad_unidades_en_stock"]))
+                    stock.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
+
+                    precio = Text(str(v["precio"]))
+                    precio.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
+
+                    descripcion = Text(str(v["pequena_descripcion"]))
+                    descripcion.highlight_words(
+                        [query], style="bold yellow", case_sensitive=False
+                    )
 
                     table.add_row(
                         lote,
@@ -322,7 +323,7 @@ while not salir:
                         vence,
                         stock,
                         precio,
-                        descripcion
+                        descripcion,
                     )
 
             console.print(table)
@@ -355,3 +356,4 @@ while not salir:
 #         print(f"SKU: {sku}")
 #         print(f"Vence el: {fecha_vencimiento}")
 #         print(f"Descripción: {datos_producto['pequena_descripcion']}\n")
+# Sí, se pueden imprimir líneas encima usando secuencias de escape de control de terminal como \033[1A para mover el cursor hacia arriba, o usando \r (retorno de carro) si el propósito es sobrescribir la misma línea varias veces. Para mover el cursor "dos o tres líneas por encima", se debe repetir la secuencia \033[1A el número de veces desea
