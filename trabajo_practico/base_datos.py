@@ -75,7 +75,7 @@ inventario_supermercado = {
         "fecha_de_compra": "2025-09-12",
         "pais_de_origen": "Perú",
         "fecha_de_vencimiento": "2026-03-20",
-        "cantidad_unidades_en_stock": 110,
+        "cantidad_unidades_en_stock": 0,
         "precio": 1.50,
         "pequena_descripcion": "Arroz de grano largo, rico en fibra y nutrientes. Ideal para guarniciones y ensaladas.",
     },
@@ -348,3 +348,4 @@ def agregar_ultima_clave(clave):
     return "LOTE-"+ ultima_clave
 
 print(agregar_ultima_clave(ultima_clave[1]))
+print(("producto") in inventario_supermercado.keys())
