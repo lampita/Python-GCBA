@@ -100,7 +100,7 @@ while not salir:
     console.print(f"Total de Unidades: [black]{total_de_unidades}[/black]")
     console.print(f"Total de Lotes en Registro: [black]{total_de_lotes}[/black]\n")
     console.print(
-        f"Total Lotes[bold green]{conv_to_super(total_de_lotes)}[/bold green] Stock Critico[bold yellow]{conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{conv_to_super(total_sin_stock)}[/bold red]"
+        f"Total Lotes[bold green ]{conv_to_super(total_de_lotes)}[/bold green ] Stock Critico[bold yellow]{conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{conv_to_super(total_sin_stock)}[/bold red]"
     )
     console.print(
         f"Lotes Validos[bold green]{conv_to_super(total_de_lotes - total_sin_stock - total_de_vencidos)}[/bold green] Por Vencer[bold yellow]{conv_to_super(total_vencimiento_critico)}[/bold yellow] Vencidos[bold red]{conv_to_super(total_de_vencidos)}[/bold red]"
@@ -109,10 +109,11 @@ while not salir:
     console.print("""\nMENU DE OPCIONES:
     1. Cambiar Umbrales de Stock y Vencimiento.
     2. Mostrar Total de Lotes
-    3. Buscar un producto
-    4. Agregar un Lote
-    5. Eliminar un Lote
-    6. Salir\n""")
+    3. Consolidado              
+    4. Buscar un producto
+    5. Agregar un Lote
+    6. Eliminar un Lote
+    7. Salir\n""")
 
     opcion_menu = input("Ingresar opcion:  ")
 
@@ -128,13 +129,15 @@ while not salir:
 
             umbral_stock_critico, check = num_es_valido(input())
             if check == "✔️\n":
-                console.print(f"-> Umbral Modificado en {umbral_stock_critico} ", end= check)## revisar.
+                console.print(
+                    f"-> Umbral Modificado en {umbral_stock_critico} ", end=check
+                )  ## revisar.
             else:
                 print(check)
                 umbral_stock_critico = umbral_stock_critico[0]  ##revisar
 
             console.print(
-                "\nIngrese Umbral Vencimiento. [i]Actual[/i] "
+                "Ingrese Umbral Vencimiento. [i]Actual[/i] "
                 + "([i]"
                 + str(umbral_vencimiento_critico)
                 + "[/i]): ",
@@ -142,12 +145,14 @@ while not salir:
             )
             umbral_vencimiento_critico, check = num_es_valido(input())
             if check == "✔️\n":
-                console.print(f"-> Umbral Modificado en {umbral_vencimiento_critico} ", end= check)## revisar.
+                console.print(
+                    f"-> Umbral Modificado en {umbral_vencimiento_critico} ", end=check
+                )  ## revisar.
             else:
                 console.print(check)
                 umbral_vencimiento_critico = umbral_vencimiento_critico[1]  ## revisar.
 
-            input("\nENTER para volver al menu ")
+            input("ENTER para volver al menu ")
             continue
 
         case "2":
@@ -235,6 +240,21 @@ while not salir:
             continue
 
         case "3":
+            borrar_consola()
+            console.print("[bold underline]Consolidado[/bold underline]\n")
+            console.print(vencidos)
+            for k, v in vencidos.items():
+                print (k, v["producto"])
+            
+
+            
+            
+            input("\nENTER para volver al menu ")
+            continue
+            ...
+        
+        
+        case "4":
             borrar_consola()
             query = input("ingrese busqueda: ").lower().strip()
             print()
@@ -330,11 +350,52 @@ while not salir:
 
             input("\nENTER para volver al menu ")
             continue
-        case "4":
-            continue
         case "5":
+            borrar_consola()
+            console.print("[bold underline]Agregar un Lote[/bold underline]\n")
+            sku = input("Ingrese SKU: ").strip()
+            producto = input("Ingrese Nombre del Producto: ").strip()
+            nombre_fantasia = input("Ingrese Nombre de Fantasia (Marca): ").strip()
+            pais_de_origen = input("Ingrese Pais de Origen: ").strip()
+            fecha_de_compra = input("Ingrese Fecha de Compra (YYYY-MM-DD): ").strip()
+            fecha_de_vencimiento = input(
+                "Ingrese Fecha de Vencimiento (YYYY-MM-DD): "
+            ).strip()
+            cantidad_unidades_en_stock = input(
+                "Ingrese Cantidad de Unidades en Stock: "
+            ).strip()
+            precio = input("Ingrese Precio por Unidad: ").strip()
+            pequena_descripcion = input("Ingrese Pequeña Descripción: ").strip()
+            lote = (sku, f"L{len(invt) + 1:03d}")
+            invt[lote] = {
+                "producto": producto,
+                "nombre_fantasia": nombre_fantasia,
+                "pais_de_origen": pais_de_origen,
+                "fecha_de_compra": fecha_de_compra,
+                "fecha_de_vencimiento": fecha_de_vencimiento,
+                "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
+                "precio": float(precio),
+                "pequena_descripcion": pequena_descripcion,
+            }
+            console.print("\nLote agregado exitosamente!\n")
+
+            input("\nENTER para volver al menu ")
             continue
         case "6":
+            borrar_consola()
+            console.print("[bold underline]Eliminar un Lote[/bold underline]\n")
+            sku = input("Ingrese SKU: ").strip()
+            lote_id = input("Ingrese ID del Lote (e.g., L001): ").strip()
+            lote = (sku, lote_id)
+            if lote in invt:
+                del invt[lote]
+                console.print("\nLote eliminado exitosamente!\n")
+            else:
+                console.print("\nLote no encontrado.\n")
+
+            input("\nENTER para volver al menu ")
+            continue
+        case "7":
             console.print("Saliendo...\n")
             salir = True
 
@@ -356,4 +417,3 @@ while not salir:
 #         print(f"SKU: {sku}")
 #         print(f"Vence el: {fecha_vencimiento}")
 #         print(f"Descripción: {datos_producto['pequena_descripcion']}\n")
-# Sí, se pueden imprimir líneas encima usando secuencias de escape de control de terminal como \033[1A para mover el cursor hacia arriba, o usando \r (retorno de carro) si el propósito es sobrescribir la misma línea varias veces. Para mover el cursor "dos o tres líneas por encima", se debe repetir la secuencia \033[1A el número de veces desea

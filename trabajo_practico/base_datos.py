@@ -75,7 +75,7 @@ inventario_supermercado = {
         "fecha_de_compra": "2025-09-12",
         "pais_de_origen": "Perú",
         "fecha_de_vencimiento": "2026-03-20",
-        "cantidad_unidades_en_stock": 110,
+        "cantidad_unidades_en_stock": 0,
         "precio": 1.50,
         "pequena_descripcion": "Arroz de grano largo, rico en fibra y nutrientes. Ideal para guarniciones y ensaladas.",
     },
@@ -333,9 +333,23 @@ inventario_supermercado = {
 
 # print(nested_dict)
 
+#dict.get('clave_externa', {}).get('clave_interna') ## ejemplo de get encadenado
 
-for v in inventario_supermercado.values():
-    if "banana" in v["producto"].lower():
-        print( v)
-        
+ultima_clave = list(inventario_supermercado.keys())[-1]
+
+def agregar_ultima_clave(clave):
+    penultimo_lote = []
+    for caracter in clave[::-1]:
+        if caracter.isdigit():
+            penultimo_lote.append(caracter)
+        else:
+            break
+    penultimo_lote.reverse()
+    ultima_clave = "".join(penultimo_lote)
+    ultima_clave = str(int(ultima_clave)+1)
+    return "LOTE-"+ ultima_clave
+
+print(agregar_ultima_clave(ultima_clave[1]))
+print(("producto") in inventario_supermercado.keys())
+
 
