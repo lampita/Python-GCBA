@@ -9,49 +9,16 @@ except ImportError:
 
 from rich.console import Console
 from rich.table import Table
-from rich.text import Text
-import os
-
+from funciones import crear_tabla, num_es_valido, borrar_consola, conv_to_super
 from datetime import datetime, timedelta
 from base_datos import productos as prod
 
 
-def borrar_consola():
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
-
-
-console = Console(highlight=False)
-hoy = datetime.now().date()
 umbral_stock_critico = 50
 umbral_vencimiento_critico = 5
-
-
-def conv_to_super(n):
-    super = list(map(chr, [8304, 185, 178, 179, 8308, 8309, 8310, 8311, 8312, 8313]))
-    st = ""
-    for i in str(n):
-        st += super[int(i)]
-    return st
-
-
-def num_es_valido(num):
-    global umbral_stock_critico
-    global umbral_vencimiento_critico
-    if not num.strip():
-        return (
-            umbral_stock_critico,
-            umbral_vencimiento_critico,
-        ), "❌ ->Dato Vacío -> No se modificó el valor.\n"
-    if any(not num.isdigit() for num in num):
-        return (
-            umbral_stock_critico,
-            umbral_vencimiento_critico,
-        ), "❌ ->Dato Erroneo -> No se modificó el valor.\n"
-    else:
-        return int(num), "✔️\n"
+console = Console(highlight=False)
+hoy = datetime.now().date()
+num_es_valido
 
 
 salida_menu = False
@@ -239,23 +206,29 @@ while not salida_menu:
 
         case "3":
             borrar_consola()
+            lotes_no_validos = sin_stock | vencidos
             console.print("[bold underline]Consolidado[/bold underline]\n")
-            console.print(vencidos)
-            for k, v in vencidos.items():
-                print(k, v["producto"])
+            consolidado = []
+            query = "LOTE"
 
+            for k, v in lotes_no_validos.items():
+                consolidado.append((k, v))
+
+            if consolidado == []:
+                console.print("No se encontraron resultados")
+            else:
+                console.print(crear_tabla(consolidado, query))
             input("\nENTER para volver al menu ")
             continue
 
         case "4":
             borrar_consola()
-            table = Table() #vacía la tabla que queda de una búsqueda anterior.
+            table = Table()  # vacía la tabla que queda de una búsqueda anterior.
             query = input("ingrese busqueda: ").lower().strip()
             print()
 
-            resultados=[]
+            resultados = []
             for k, v in prod.items():
-                
                 if (
                     query in k[0].lower()
                     or query in k[1].lower()
@@ -267,99 +240,16 @@ while not salida_menu:
                     or query in str(v["precio"]).lower()
                     or query in v["pequena_descripcion"].lower()
                 ):
-                    resultados.append((k,v))           
-                    
-
-                    table = Table(title="Busqueda. Palabra clave: " + query)
-                    table.add_column("Lote", justify="left")
-                    table.add_column("SKU", justify="left")
-                    table.add_column("Producto", justify="left")
-                    table.add_column("Marca", justify="left")
-                    table.add_column("Comprado", justify="right")
-                    table.add_column("Origen", justify="left")
-                    table.add_column("Vence", justify="right")
-                    table.add_column("Stock", justify="right")
-                    table.add_column("Precio", justify="right")
-                    table.add_column("Descripción", justify="left")
-
-
-                    for resultado in resultados:
-
-                       
-                        
-                            
-                        lote = Text(str(resultado[0][0]))
-                        lote.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        sku = Text(str(resultado[0][0]))
-                        sku.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        producto = Text(str(resultado[1]["producto"]))
-                        producto.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        marca = Text(str(resultado[1]["nombre_fantasia"]))
-                        marca.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        comprado = Text(str(resultado[1]["cantidad_unidades_en_stock"]))
-                        comprado.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        origen = Text(str(resultado[1]["pais_de_origen"]))
-                        origen.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        vence = Text(str(resultado[1]["fecha_de_vencimiento"]))
-                        vence.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        stock = Text(str(resultado[1]["cantidad_unidades_en_stock"]))
-                        stock.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        precio = Text(str(resultado[1]["precio"]))
-                        precio.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        descripcion = Text(str(resultado[1]["pequena_descripcion"]))
-                        descripcion.highlight_words(
-                            [query], style="bold yellow", case_sensitive=False
-                        )
-
-                        table.add_row(
-                            lote,
-                            sku,
-                            producto,
-                            marca,
-                            comprado,
-                            origen,
-                            vence,
-                            stock,
-                            precio,
-                            descripcion,
-                        )
-
-            if resultados==[]:
-                 console.print("No se encontraron resultados")
+                    resultados.append((k, v))
+            if resultados == []:
+                console.print("No se encontraron resultados")
             else:
-                console.print(table)
+                console.print(crear_tabla(resultados, query))
             
 
             input("\nENTER para volver al menu ")
             continue
-            
+
         case "5":
             borrar_consola()
             console.print("[bold underline]Agregar un Lote[/bold underline]\n")
