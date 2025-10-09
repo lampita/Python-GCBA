@@ -9,16 +9,19 @@ except ImportError:
 
 from rich.console import Console
 from rich.table import Table
-from funciones import crear_tabla, num_es_valido, borrar_consola, conv_to_super
+from funciones import crear_tabla, borrar_consola, conv_to_super
 from datetime import datetime, timedelta
 from base_datos import productos as prod
-
+import prueba as pr
 
 umbral_stock_critico = 50
 umbral_vencimiento_critico = 5
 console = Console(highlight=False)
 hoy = datetime.now().date()
-num_es_valido
+
+
+
+
 
 
 salida_menu = False
@@ -94,7 +97,7 @@ while not salida_menu:
                 end="",
             )
 
-            umbral_stock_critico, check = num_es_valido(input())
+            umbral_stock_critico, check = pr.num_es_valido(input())
             if check == "✔️\n":
                 console.print(
                     f"-> Umbral Modificado en {umbral_stock_critico} ", end=check
@@ -110,7 +113,7 @@ while not salida_menu:
                 + "[/i]): ",
                 end="",
             )
-            umbral_vencimiento_critico, check = num_es_valido(input())
+            umbral_vencimiento_critico, check = pr.num_es_valido(input())
             if check == "✔️\n":
                 console.print(
                     f"-> Umbral Modificado en {umbral_vencimiento_critico} ", end=check
