@@ -1,4 +1,5 @@
-inventario_supermercado = {
+
+productos = {
     ("FRUT-BAN-001", "LOTE-1"): {
         "producto": "Bananas",
         "nombre_fantasia": "Bananas Tropicales",
@@ -301,6 +302,27 @@ inventario_supermercado = {
     },
 }
 
+resultados= [
+    (
+        ('FRUT-BAN-001', 'LOTE-1'),
+        {
+            'producto': 'Bananas',
+            'nombre_fantasia': 'Bananas Tropicales',
+            'fecha_de_compra': '2025-09-15',
+            'pais_de_origen': 'Ecuador',
+            'fecha_de_vencimiento': '2025-09-20',
+            'cantidad_unidades_en_stock': 150,
+            'precio': 1.99,
+            'pequena_descripcion': 'Bananas de la variedad Cavendish, dulces y cremosas, ideales para un snack saludable o postres.'
+        }
+    )
+]
+
+
+
+
+
+
 
 # a=inventario_supermercado
 # a['CUIDADO-SHA-030']['producto']='shampoo'
@@ -333,9 +355,10 @@ inventario_supermercado = {
 
 # print(nested_dict)
 
-#dict.get('clave_externa', {}).get('clave_interna') ## ejemplo de get encadenado
+# dict.get('clave_externa', {}).get('clave_interna') ## ejemplo de get encadenado
 
-ultima_clave = list(inventario_supermercado.keys())[-1]
+ultima_clave = list(productos.keys())[-1]
+
 
 def agregar_ultima_clave(clave):
     penultimo_lote = []
@@ -346,10 +369,35 @@ def agregar_ultima_clave(clave):
             break
     penultimo_lote.reverse()
     ultima_clave = "".join(penultimo_lote)
-    ultima_clave = str(int(ultima_clave)+1)
-    return "LOTE-"+ ultima_clave
-
-print(agregar_ultima_clave(ultima_clave[1]))
-print(("producto") in inventario_supermercado.keys())
+    ultima_clave = str(int(ultima_clave) + 1)
+    return "LOTE-" + ultima_clave
 
 
+[
+    (
+        ("FRUT-MAN-007", "LOTE-7"),
+        {
+            "producto": "Manzanas Red Delicious",
+            "nombre_fantasia": "Manzanas Red Delicia",
+            "fecha_de_compra": "2025-09-14",
+            "pais_de_origen": "Estados Unidos",
+            "fecha_de_vencimiento": "2025-10-08",
+            "cantidad_unidades_en_stock": 75,
+            "precio": 2.75,
+            "pequena_descripcion": "Manzanas grandes, de color rojo intenso y sabor dulce. Crujientes y jugosas.",
+        },
+    ),
+    (
+        ("BEB-JUG-021", "LOTE-21"),
+        {
+            "producto": "Jugo de Naranja",
+            "nombre_fantasia": "Jugo Naranja Cítrica",
+            "fecha_de_compra": "2025-09-17",
+            "pais_de_origen": "Brasil",
+            "fecha_de_vencimiento": "2025-12-05",
+            "cantidad_unidades_en_stock": 75,
+            "precio": 2.8,
+            "pequena_descripcion": "Jugo de naranja exprimido, sin pulpa. Envase de 1 litro, pasteurizado.",
+        },
+    ),
+]
