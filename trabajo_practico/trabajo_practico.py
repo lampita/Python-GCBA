@@ -9,19 +9,25 @@ except ImportError:
 
 from rich.console import Console
 from rich.table import Table
-import funciones as fn
+from funciones import crear_tabla, borrar_consola, conv_to_super
 from datetime import datetime, timedelta
 from base_datos import productos as prod
+import prueba as pr
 
-
+umbral_stock_critico = 50
+umbral_vencimiento_critico = 5
 console = Console(highlight=False)
 hoy = datetime.now().date()
 
 
+
+
+
+
 salida_menu = False
 while not salida_menu:
-    fn.borrar_consola()
-    dias_umbral = timedelta(days=fn.umbral_vencimiento_critico)
+    borrar_consola()
+    dias_umbral = timedelta(days=umbral_vencimiento_critico)
     fecha_limite = hoy + dias_umbral
 
     vencimiento_critico = {
@@ -44,7 +50,7 @@ while not salida_menu:
     stock_critico = {
         k: v
         for (k, v) in prod.items()
-        if v["cantidad_unidades_en_stock"] <= fn.umbral_stock_critico
+        if v["cantidad_unidades_en_stock"] <= umbral_stock_critico
         and v["cantidad_unidades_en_stock"] > 0
     }
     sin_stock = {
@@ -64,10 +70,10 @@ while not salida_menu:
     console.print(f"Total de Unidades: [black]{total_de_unidades}[/black]")
     console.print(f"Total de Lotes en Registro: [black]{total_de_lotes}[/black]\n")
     console.print(
-        f"Total Lotes[bold green ]{fn.conv_to_super(total_de_lotes)}[/bold green ] Stock Critico[bold yellow]{fn.conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{fn.conv_to_super(total_sin_stock)}[/bold red]"
+        f"Total Lotes[bold green ]{conv_to_super(total_de_lotes)}[/bold green ] Stock Critico[bold yellow]{conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{conv_to_super(total_sin_stock)}[/bold red]"
     )
     console.print(
-        f"Lotes Validos[bold green]{fn.conv_to_super(total_de_lotes - total_sin_stock - total_de_vencidos)}[/bold green] Por Vencer[bold yellow]{fn.conv_to_super(total_vencimiento_critico)}[/bold yellow] Vencidos[bold red]{fn.conv_to_super(total_de_vencidos)}[/bold red]"
+        f"Lotes Validos[bold green]{conv_to_super(total_de_lotes - total_sin_stock - total_de_vencidos)}[/bold green] Por Vencer[bold yellow]{conv_to_super(total_vencimiento_critico)}[/bold yellow] Vencidos[bold red]{conv_to_super(total_de_vencidos)}[/bold red]"
     )
 
     console.print("""\nMENU DE OPCIONES:
@@ -86,12 +92,12 @@ while not salida_menu:
             console.print(
                 "Ingrese Umbral Stock. [i]Actual[/i] "
                 + "([i]"
-                + str(fn.umbral_stock_critico)
+                + str(umbral_stock_critico)
                 + "[/i]): ",
                 end="",
             )
 
-            umbral_stock_critico, check = fn.num_es_valido(input())
+            umbral_stock_critico, check = pr.num_es_valido(input())
             if check == "✔️\n":
                 console.print(
                     f"-> Umbral Modificado en {umbral_stock_critico} ", end=check
@@ -103,11 +109,11 @@ while not salida_menu:
             console.print(
                 "Ingrese Umbral Vencimiento. [i]Actual[/i] "
                 + "([i]"
-                + str(fn.umbral_vencimiento_critico)
+                + str(umbral_vencimiento_critico)
                 + "[/i]): ",
                 end="",
             )
-            umbral_vencimiento_critico, check = fn.num_es_valido(input())
+            umbral_vencimiento_critico, check = pr.num_es_valido(input())
             if check == "✔️\n":
                 console.print(
                     f"-> Umbral Modificado en {umbral_vencimiento_critico} ", end=check
@@ -119,7 +125,7 @@ while not salida_menu:
             continue
 
         case "2":
-            fn.borrar_consola()
+            borrar_consola()
 
             table = Table(title="Lotes en Registro")
             table.add_column(
@@ -202,7 +208,7 @@ while not salida_menu:
             continue
 
         case "3":
-            fn.borrar_consola()
+            borrar_consola()
             lotes_no_validos = sin_stock | vencidos
             console.print("[bold underline]Consolidado[/bold underline]\n")
             consolidado = []
@@ -214,12 +220,12 @@ while not salida_menu:
             if consolidado == []:
                 console.print("No se encontraron resultados")
             else:
-                console.print(fn.crear_tabla(consolidado, query))
+                console.print(crear_tabla(consolidado, query))
             input("\nENTER para volver al menu ")
             continue
 
         case "4":
-            fn.borrar_consola()
+            borrar_consola()
             table = Table()  # vacía la tabla que queda de una búsqueda anterior.
             query = input("ingrese busqueda: ").lower().strip()
             print()
@@ -241,14 +247,14 @@ while not salida_menu:
             if resultados == []:
                 console.print("No se encontraron resultados")
             else:
-                console.print(fn.crear_tabla(resultados, query))
+                console.print(crear_tabla(resultados, query))
             
 
             input("\nENTER para volver al menu ")
             continue
 
         case "5":
-            fn.borrar_consola()
+            borrar_consola()
             console.print("[bold underline]Agregar un Lote[/bold underline]\n")
             sku = input("Ingrese SKU: ").strip()
             producto = input("Ingrese Nombre del Producto: ").strip()
@@ -279,7 +285,7 @@ while not salida_menu:
             input("\nENTER para volver al menu ")
             continue
         case "6":
-            fn.borrar_consola()
+            borrar_consola()
             console.print("[bold underline]Eliminar un Lote[/bold underline]\n")
             sku = input("Ingrese SKU: ").strip()
             lote_id = input("Ingrese ID del Lote (e.g., L001): ").strip()

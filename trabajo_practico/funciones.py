@@ -2,9 +2,9 @@ import os
 from rich.console import Console
 from rich.table import Table
 from rich.text import Text
-console = Console(highlight=False)
-umbral_stock_critico = 50
-umbral_vencimiento_critico = 5
+#console = Console(highlight=False)
+#umbral_stock_critico = 50
+#umbral_vencimiento_critico = 5
 def borrar_consola():
     if os.name == "nt":
         os.system("cls")
@@ -19,21 +19,6 @@ def conv_to_super(n):
     return st
 
 
-def num_es_valido(num):
-    global umbral_stock_critico
-    global umbral_vencimiento_critico
-    if not num.strip():
-        return (
-            umbral_stock_critico,
-            umbral_vencimiento_critico,
-        ), "❌ ->Dato Vacío -> No se modificó el valor.\n"
-    if any(not num.isdigit() for num in num):
-        return (
-            umbral_stock_critico,
-            umbral_vencimiento_critico,
-        ), "❌ ->Dato Erroneo -> No se modificó el valor.\n"
-    else:
-        return int(num), "✔️\n"
 
 
 
@@ -121,5 +106,3 @@ def crear_tabla(resultados, query="LOTE"):
             descripcion,
         )
     return table
-
-
