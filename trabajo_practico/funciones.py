@@ -135,7 +135,5 @@ def crear_tabla(resultados, titulo, query=None):
         )
     return table
 
-console = Console()
-resultados = 
-               
-console.print(crear_tabla(resultados,"tablita de prueba"))
+
+

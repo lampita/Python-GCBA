@@ -319,8 +319,26 @@ while not salida_menu:
             pequena_descripcion = input("Descripción: ").strip()
             if pequena_descripcion == "":
                 pequena_descripcion = "N/A"
-
+            
             lote = (sku, f"LOTE-{int(ultima_clave[1].split('-')[1]) + 1}")
+            console.print(
+                crear_tabla([(lote, {
+                    "producto": producto,
+                    "nombre_fantasia": nombre_fantasia,
+                    "pais_de_origen": pais_de_origen,
+                    "fecha_de_compra": fecha_de_compra,
+                    "fecha_de_vencimiento": fecha_de_vencimiento,
+                    "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
+                    "precio": float(precio),
+                    "pequena_descripcion": pequena_descripcion,
+                })], "Lote a Agregar"          
+            ))  
+            agregar = input("\nConfirma agregar el Lote? (s/n): ").strip().lower()
+            if agregar != "s":
+                console.print("Operación cancelada por el usuario.")
+                input("\nENTER para volver al menu ")
+                continue
+             
             prod[lote] = {
                 "producto": producto,
                 "nombre_fantasia": nombre_fantasia,
@@ -332,7 +350,7 @@ while not salida_menu:
                 "pequena_descripcion": pequena_descripcion,
             }
             console.print("\nLote agregado exitosamente!\n")
-            print(prod)
+            
             input("\nENTER para volver al menu ")
             continue
         case "6":
@@ -346,6 +364,17 @@ while not salida_menu:
                     por_borrar.append((k, v))
                     break
             console.print(crear_tabla(por_borrar, "Tablita"))
+            if por_borrar == []:
+                console.print("No se encontraron resultados")
+                input("\nENTER para volver al menu ")
+                continue
+            borrar = input("\nConfirma eliminar el Lote? (s/n): ").strip().lower()
+            if borrar != "s":
+                console.print("Operación cancelada por el usuario.")
+                input("\nENTER para volver al menu ")
+                continue
+            del prod[por_borrar[0][0]]
+            console.print("\nLote eliminado exitosamente!\n")
 
             input("\nENTER para volver al menu ")
             continue
