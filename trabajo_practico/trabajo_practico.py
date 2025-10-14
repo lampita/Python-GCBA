@@ -70,8 +70,8 @@ while not salida_menu:
     console.print(
         f"\t{'=' * 31}\n\t[bold red]CONTROL DE STOCK Y VENCIMIENTOS[/bold red]\n\t{'=' * 31}"
     )
-    console.print(f"Total de Unidades: [black]{total_de_unidades}[/black]")
-    console.print(f"Total de Lotes en Registro: [black]{total_de_lotes}[/black]\n")
+    console.print(f"Total de Unidades: [orange3]{total_de_unidades}[/orange3]")
+    console.print(f"Total de Lotes en Registro: [orange3]{total_de_lotes}[/orange3]\n")
     console.print(
         f"Total Lotes[bold green ]{conv_to_super(total_de_lotes)}[/bold green ] Stock Critico[bold yellow]{conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{conv_to_super(total_sin_stock)}[/bold red]"
     )
@@ -282,7 +282,7 @@ while not salida_menu:
             sku = "-".join(sku)
             if sku == "--":
                 sku = "N/A"
-            print(sku)
+            console.print(f"\n[red bold]SKU ingresado:[/red bold] {sku}\n" )
 
             producto = input("Tipo de Producto: ").strip().capitalize()
             if producto == "":
@@ -302,25 +302,25 @@ while not salida_menu:
             fecha_de_vencimiento = "-".join(vence)
             if not validar_fecha(fecha_de_vencimiento):
                 fecha_de_vencimiento = "N/A"
-                console.print("Advertencia: se ha introducido una fecha incorrecta.")
-
+                console.print("\n[red on white] ADVERTENCIA: introdujo una fecha incorrecta. Se asignó 'N/A' [/red on white]\n")
+            
             cantidad_unidades_en_stock = input("Unidades en el Lote: ")
             if not cantidad_unidades_en_stock.isdigit():
                 cantidad_unidades_en_stock = "0"
-                console.print("Advertencia: se asigno 0 unidades.")
-            print(cantidad_unidades_en_stock)
+                console.print("\n[red on white] ADVERTENCIA: introdujo una valor incorrecto. Se asignó 0 [/red on white]\n")
 
+            
             precio = input("Precio por Unidad: ")
             if not float_es_valido(precio):
                 precio = "0"
-                console.print("Advertencia: se asigno un valor de 0 al precio.")
+                console.print("\n[red on white] ADVERTENCIA: introdujo una valor incorrecto. Se asignó 0.0 [/red on white]\n")
                 
-            print(precio)
             pequena_descripcion = input("Descripción: ").strip()
             if pequena_descripcion == "":
                 pequena_descripcion = "N/A"
             
             lote = (sku, f"LOTE-{int(ultima_clave[1].split('-')[1]) + 1}")
+            titulo="[bold underline]LOTE A INCORPORAR A REGISTRO[/bold underline]\n"          
             console.print(
                 crear_tabla([(lote, {
                     "producto": producto,
@@ -331,7 +331,7 @@ while not salida_menu:
                     "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
                     "precio": float(precio),
                     "pequena_descripcion": pequena_descripcion,
-                })], "Lote a Agregar"          
+                })], titulo
             ))  
             agregar = input("\nConfirma agregar el Lote? (s/n): ").strip().lower()
             if agregar != "s":
@@ -368,7 +368,7 @@ while not salida_menu:
                 console.print("No se encontraron resultados")
                 input("\nENTER para volver al menu ")
                 continue
-            borrar = input("\nConfirma eliminar el Lote? (s/n): ").strip().lower()
+            borrar = input("\n✋🛑 Confirma eliminar el Lote? (s/n): ").strip().lower()
             if borrar != "s":
                 console.print("Operación cancelada por el usuario.")
                 input("\nENTER para volver al menu ")
