@@ -1,9 +1,7 @@
 import os
-from rich.console import Console
 from rich.table import Table
 from rich.text import Text
-from rich.style import Style
-from datetime import datetime, timedelta
+from datetime import datetime
 
 hoy = datetime.now().date()
 
@@ -134,4 +132,6 @@ def crear_tabla(resultados, titulo, query=None):
             descripcion,
         )
     return table
+
+
 

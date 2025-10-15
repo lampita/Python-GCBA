@@ -70,8 +70,8 @@ while not salida_menu:
     console.print(
         f"\t{'=' * 31}\n\t[bold red]CONTROL DE STOCK Y VENCIMIENTOS[/bold red]\n\t{'=' * 31}"
     )
-    console.print(f"Total de Unidades: [black]{total_de_unidades}[/black]")
-    console.print(f"Total de Lotes en Registro: [black]{total_de_lotes}[/black]\n")
+    console.print(f"Total de Unidades: [orange3]{total_de_unidades}[/orange3]")
+    console.print(f"Total de Lotes en Registro: [orange3]{total_de_lotes}[/orange3]\n")
     console.print(
         f"Total Lotes[bold green ]{conv_to_super(total_de_lotes)}[/bold green ] Stock Critico[bold yellow]{conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{conv_to_super(total_sin_stock)}[/bold red]"
     )
@@ -81,8 +81,8 @@ while not salida_menu:
 
     console.print("""\nMENU DE OPCIONES:
     1. Cambiar Umbrales de Stock y Vencimiento.
-    2. Mostrar total de Lotes.
-    3. Todos los Lotes no válidos.             
+    2. Total de Lotes.
+    3. Total de Lotes no válidos.             
     4. Buscar por palabra clave.
     5. Agregar un Lote.
     6. Eliminar un Lote.
@@ -266,7 +266,7 @@ while not salida_menu:
                         "[bold red on white ]NO SE ENCONTRARON RESULTADOS[/bold red on white ]"
                     )
                 else:
-                    console.print(resultados)
+                    
                     console.print(crear_tabla(resultados, titulo, query))
 
                 salida = input("\nENTER para continuar... ")
@@ -275,7 +275,7 @@ while not salida_menu:
         case "5":
             borrar_consola()
             ultima_clave = list(prod.keys())[-1]
-            console.print("[bold underline]Agregar un Lote[/bold underline]\n")
+            console.print("[bold underline]AGREGAR LOTE[/bold underline]\n")
             sku = []
             for i in range(3):
                 codigo = input(f"Ingrese SKU {i + 1}º Codigo: ").strip().upper()
@@ -283,7 +283,7 @@ while not salida_menu:
             sku = "-".join(sku)
             if sku == "--":
                 sku = "N/A"
-            print(sku)
+            console.print(f"\n[red bold]SKU ingresado:[/red bold] {sku}\n")
 
             producto = input("Tipo de Producto: ").strip().capitalize()
             if producto == "":
@@ -291,7 +291,7 @@ while not salida_menu:
             nombre_fantasia = input("Nombre del  Producto: ").strip().capitalize()
             if nombre_fantasia == "":
                 nombre_fantasia = "N/A"
-            pais_de_origen = input("Ingrese Pais de Origen: ").strip()
+            pais_de_origen = input("Ingrese Pais de Origen: ").strip().capitalize()
             if pais_de_origen == "":
                 pais_de_origen = "N/A"
             fecha_de_compra = hoy.strftime("%Y-%m-%d")
@@ -303,72 +303,122 @@ while not salida_menu:
             fecha_de_vencimiento = "-".join(vence)
             if not validar_fecha(fecha_de_vencimiento):
                 fecha_de_vencimiento = "N/A"
-                console.print("Advertencia: se ha introducido una fecha incorrecta.")
+                console.print(
+                    "\n[red on white] ADVERTENCIA: introdujo una fecha incorrecta. Se asignó 'N/A' [/red on white]\n"
+                )
 
             cantidad_unidades_en_stock = input("Unidades en el Lote: ")
             if not cantidad_unidades_en_stock.isdigit():
                 cantidad_unidades_en_stock = "0"
-                console.print("Advertencia: se asigno 0 unidades.")
-            print(cantidad_unidades_en_stock)
+                console.print(
+                    "\n[red on white] ADVERTENCIA: introdujo una valor incorrecto. Se asignó 0 [/red on white]\n"
+                )
 
             precio = input("Precio por Unidad: ")
             if not float_es_valido(precio):
                 precio = "0"
-                console.print("Advertencia: se asigno un valor de 0 al precio.")
+                console.print(
+                    "\n[red on white] ADVERTENCIA: introdujo una valor incorrecto. Se asignó 0.0 [/red on white]\n"
+                )
 
-            print(precio)
             pequena_descripcion = input("Descripción: ").strip()
             if pequena_descripcion == "":
                 pequena_descripcion = "N/A"
 
+            borrar_consola()
+
             lote = (sku, f"LOTE-{int(ultima_clave[1].split('-')[1]) + 1}")
-
-            console.print("Se dispone a agregar el siguente Lote")
-
-            agrega={ lote: {"producto": producto,
-                    "nombre_fantasia": nombre_fantasia,
-                    "pais_de_origen": pais_de_origen,
-                    "fecha_de_compra": fecha_de_compra,
-                    "fecha_de_vencimiento": fecha_de_vencimiento,
-                    "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
-                    "precio": float(precio),
-                    "pequena_descripcion": pequena_descripcion,} }
-            print(agrega)
-            crear_tabla(agrega, "Tablita")
-  
-
-            opcion_agregar = input("Confirma? S/N: ")
-            if opcion_agregar.lower() != "s":
+            titulo = "[bold underline]LOTE A REGISTRAR[/bold underline] 👇\n"
+            console.print(
+                crear_tabla(
+                    [
+                        (
+                            lote,
+                            {
+                                "producto": producto,
+                                "nombre_fantasia": nombre_fantasia,
+                                "pais_de_origen": pais_de_origen,
+                                "fecha_de_compra": fecha_de_compra,
+                                "fecha_de_vencimiento": fecha_de_vencimiento,
+                                "cantidad_unidades_en_stock": int(
+                                    cantidad_unidades_en_stock
+                                ),
+                                "precio": float(precio),
+                                "pequena_descripcion": pequena_descripcion,
+                            },
+                        )
+                    ],
+                    titulo,
+                )
+            )
+            agregar = input("\n⚠️\tConfirma agregar Lote? (s/n): ").strip().lower()
+            if agregar != "s":
+                console.print("\nNo se Agregó el Lote.")
+                input("\nENTER para volver al menu ")
                 continue
-            else:
-                prod[lote] = {
-                    "producto": producto,
-                    "nombre_fantasia": nombre_fantasia,
-                    "pais_de_origen": pais_de_origen,
-                    "fecha_de_compra": fecha_de_compra,
-                    "fecha_de_vencimiento": fecha_de_vencimiento,
-                    "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
-                    "precio": float(precio),
-                    "pequena_descripcion": pequena_descripcion,
-                }
-                console.print("\nLote agregado exitosamente!\n")
+
+            prod[lote] = {
+                "producto": producto,
+                "nombre_fantasia": nombre_fantasia,
+                "pais_de_origen": pais_de_origen,
+                "fecha_de_compra": fecha_de_compra,
+                "fecha_de_vencimiento": fecha_de_vencimiento,
+                "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
+                "precio": float(precio),
+                "pequena_descripcion": pequena_descripcion,
+            }
+            console.print("\nLote agregado con éxito\n")
 
             input("\nENTER para volver al menu ")
             continue
         case "6":
             borrar_consola()
             por_borrar = []
-            console.print("[bold underline]Eliminar un Lote[/bold underline]\n")
-            lote_id = input("Ingrese numero de Lote para Borrar: ").strip()
+            console.print("[bold underline]BORRAR LOTE[/bold underline]\n")
+            lote_id = input("Número de Lote a Borrar: ").strip()
             lote = f"LOTE-{lote_id}"
             for k, v in prod.items():
                 if k[1] == lote:
                     por_borrar.append((k, v))
                     break
-            console.print(crear_tabla(por_borrar, "Tablita"))
+            if por_borrar == []:
+                console.print(
+                    "\n[red on white] ADVERTENCIA: Lote Inexistente. [/red on white]\n"
+                )
+                input("\nENTER para volver al menu ")
+                continue
+            titulo = "[bold underline]LOTE A BORRAR[/bold underline] 👇\n"
+            console.print(crear_tabla(por_borrar, titulo))
+
+            borrar = input("\n🛑\tConfirma eliminar el Lote? (s/n): ").strip().lower()
+            if borrar != "s":
+                console.print("No se borró.")
+                input("\nENTER para volver al menu ")
+                continue
+            del prod[por_borrar[0][0]]
+            console.print(f"\n{lote} eliminado.\n")
 
             input("\nENTER para volver al menu ")
             continue
         case "7":
             console.print("Saliendo...\n")
             salida_menu = True
+
+
+# print("--- Productos próximos a vencer (dentro de los próximos 7 días) ---\n")
+
+# # 2. Iterar sobre el diccionario principal
+# for sku, datos_producto in prod.items():
+#     # 3. Omitir productos sin fecha de vencimiento
+#     if datos_producto['fecha_de_vencimiento'] == 'N/A':
+#         continue
+
+#     # 4. Convertir la cadena de texto de la fecha a un objeto de fecha
+#     fecha_vencimiento = datetime.strptime(datos_producto['fecha_de_vencimiento'], '%Y-%m-%d').date()
+
+#     # 5. Comprobar si el producto está en el rango de vencimiento
+#     if hoy <= fecha_vencimiento <= fecha_limite:
+#         print(f"Producto: {datos_producto['producto']}")
+#         print(f"SKU: {sku}")
+#         print(f"Vence el: {fecha_vencimiento}")
+#         print(f"Descripción: {datos_producto['pequena_descripcion']}\n")
