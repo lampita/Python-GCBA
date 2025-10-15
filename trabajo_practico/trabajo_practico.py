@@ -15,7 +15,7 @@ from funciones import (
     conv_to_super,
     num_es_valido,
     validar_fecha,
-    float_es_valido
+    float_es_valido,
 )
 from datetime import datetime, timedelta
 from base_datos import productos as prod
@@ -169,9 +169,7 @@ while not salida_menu:
                     and unidades <= umbral_stock_critico
                     and unidades > 0
                 ):
-                    stock_con_alerta = (
-                        f"[yellow bold ]{unidades}[/bold yellow ]"
-                    )
+                    stock_con_alerta = f"[yellow bold ]{unidades}[/bold yellow ]"
                 elif unidades == 0:
                     stock_con_alerta = f"[red bold ]{unidades}[/bold red ]"
 
@@ -184,9 +182,7 @@ while not salida_menu:
                     <= datetime.strptime(fechas, "%Y-%m-%d").date()
                     <= fecha_limite
                 ):
-                    fecha_con_alerta = (
-                        f"[yellow bold ]{fechas}[/bold yellow ]"
-                    )
+                    fecha_con_alerta = f"[yellow bold ]{fechas}[/bold yellow ]"
                 elif (
                     fechas != "N/A"
                     and hoy
@@ -223,7 +219,9 @@ while not salida_menu:
                 consolidado.append((k, v))
 
             if consolidado == []:
-                console.print("No se encontraron resultados")
+                console.print(
+                    "[red on white bold]NO SE ENCONTRARON LOTES NO VÁLIDOS[/red on white bold]"
+                )
             else:
                 console.print(crear_tabla(consolidado, titulo))
             input("\nENTER para volver al menu ")
@@ -264,8 +262,11 @@ while not salida_menu:
                     ):
                         resultados.append((k, v))
                 if resultados == []:
-                    console.print("No se encontraron resultados")
+                    console.print(
+                        "[bold red on white ]NO SE ENCONTRARON RESULTADOS[/bold red on white ]"
+                    )
                 else:
+                    console.print(resultados)
                     console.print(crear_tabla(resultados, titulo, query))
 
                 salida = input("\nENTER para continuar... ")
@@ -314,25 +315,44 @@ while not salida_menu:
             if not float_es_valido(precio):
                 precio = "0"
                 console.print("Advertencia: se asigno un valor de 0 al precio.")
-                
+
             print(precio)
             pequena_descripcion = input("Descripción: ").strip()
             if pequena_descripcion == "":
                 pequena_descripcion = "N/A"
 
             lote = (sku, f"LOTE-{int(ultima_clave[1].split('-')[1]) + 1}")
-            prod[lote] = {
-                "producto": producto,
-                "nombre_fantasia": nombre_fantasia,
-                "pais_de_origen": pais_de_origen,
-                "fecha_de_compra": fecha_de_compra,
-                "fecha_de_vencimiento": fecha_de_vencimiento,
-                "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
-                "precio": float(precio),
-                "pequena_descripcion": pequena_descripcion,
-            }
-            console.print("\nLote agregado exitosamente!\n")
-            print(prod)
+
+            console.print("Se dispone a agregar el siguente Lote")
+
+            agrega={ lote: {"producto": producto,
+                    "nombre_fantasia": nombre_fantasia,
+                    "pais_de_origen": pais_de_origen,
+                    "fecha_de_compra": fecha_de_compra,
+                    "fecha_de_vencimiento": fecha_de_vencimiento,
+                    "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
+                    "precio": float(precio),
+                    "pequena_descripcion": pequena_descripcion,} }
+            print(agrega)
+            crear_tabla(agrega, "Tablita")
+  
+
+            opcion_agregar = input("Confirma? S/N: ")
+            if opcion_agregar.lower() != "s":
+                continue
+            else:
+                prod[lote] = {
+                    "producto": producto,
+                    "nombre_fantasia": nombre_fantasia,
+                    "pais_de_origen": pais_de_origen,
+                    "fecha_de_compra": fecha_de_compra,
+                    "fecha_de_vencimiento": fecha_de_vencimiento,
+                    "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
+                    "precio": float(precio),
+                    "pequena_descripcion": pequena_descripcion,
+                }
+                console.print("\nLote agregado exitosamente!\n")
+
             input("\nENTER para volver al menu ")
             continue
         case "6":
