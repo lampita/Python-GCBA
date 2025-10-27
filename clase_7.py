@@ -1,4 +1,6 @@
 import os, datetime
+from time import sleep
+from rich.progress import Progress
 
 try:
     import colorama
@@ -152,3 +154,15 @@ while not salir:
         case "5":
             print("Saliendo...\n\n")
             salir = True
+
+
+with Progress() as progress:
+    # Añade una nueva tarea y obtén su ID
+    task1 = progress.add_task("[red]Descargando...", total=100)
+    task2 = progress.add_task("[green]Procesando...", total=200)
+
+    # Actualiza las tareas hasta que estén completas
+    while not progress.finished:
+        progress.update(task1, advance=1)
+        progress.update(task2, advance=0.5)
+        sleep(0.05)
