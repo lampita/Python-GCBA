@@ -34,6 +34,7 @@ while not salida_menu:
     fecha_limite = hoy + dias_umbral
 
     vencimiento_critico = {
+       # pattern = f"SELECT * FROM productos WHERE fecha_de_vencimiento != 'N/A' AND cantidad_unidades_en_stock > 0 AND fecha_de_vencimiento BETWEEN '{hoy}' AND '{fecha_limite}'"
         k: v
         for (k, v) in prod.items()
         if v["fecha_de_vencimiento"] != "N/A"
@@ -43,6 +44,7 @@ while not salida_menu:
         <= fecha_limite
     }
     vencidos = {
+        #pattern = f"SELECT * FROM productos WHERE fecha_de_vencimiento != 'N/A' AND cantidad_unidades_en_stock > 0 AND fecha_de_vencimiento < '{hoy}'"
         k: v
         for (k, v) in prod.items()
         if v["fecha_de_vencimiento"] != "N/A"
@@ -51,12 +53,14 @@ while not salida_menu:
     }
 
     stock_critico = {
+        #pattern = f"SELECT * FROM productos WHERE cantidad_unidades_en_stock <= {umbral_stock_critico} AND cantidad_unidades_en_stock > 0"
         k: v
         for (k, v) in prod.items()
         if v["cantidad_unidades_en_stock"] <= umbral_stock_critico
         and v["cantidad_unidades_en_stock"] > 0
     }
     sin_stock = {
+        #pattern = f"SELECT * FROM productos WHERE cantidad_unidades_en_stock = 0"
         k: v for (k, v) in prod.items() if v["cantidad_unidades_en_stock"] == 0
     }
 

@@ -129,3 +129,4 @@ def eliminar_lote(lote): #falta confirmar que el registro exista
 
 
 
+
