@@ -18,7 +18,7 @@ from funciones import (
     float_es_valido,
 )
 from datetime import datetime, timedelta
-from base_datos import productos as prod
+import engine
 
 
 umbral_stock_critico = 50
@@ -30,38 +30,25 @@ hoy = datetime.now().date()
 salida_menu = False
 while not salida_menu:
     borrar_consola()
+    prod = engine.consultar_base("SELECT * FROM productos")
     dias_umbral = timedelta(days=umbral_vencimiento_critico)
     fecha_limite = hoy + dias_umbral
 
-    vencimiento_critico = {
-        k: v
-        for (k, v) in prod.items()
-        if v["fecha_de_vencimiento"] != "N/A"
-        and v["cantidad_unidades_en_stock"] > 0
-        and hoy
-        <= datetime.strptime(v["fecha_de_vencimiento"], "%Y-%m-%d").date()
-        <= fecha_limite
-    }
-    vencidos = {
-        k: v
-        for (k, v) in prod.items()
-        if v["fecha_de_vencimiento"] != "N/A"
-        and v["cantidad_unidades_en_stock"] > 0
-        and hoy > datetime.strptime(v["fecha_de_vencimiento"], "%Y-%m-%d").date()
-    }
+    pattern_vc = f"SELECT * FROM productos WHERE fecha_de_vencimiento != 'N/A' AND cantidad_unidades_en_stock > 0 AND fecha_de_vencimiento BETWEEN '{hoy}' AND '{fecha_limite}'"
+    vencimiento_critico = engine.consultar_base(pattern_vc)
 
-    stock_critico = {
-        k: v
-        for (k, v) in prod.items()
-        if v["cantidad_unidades_en_stock"] <= umbral_stock_critico
-        and v["cantidad_unidades_en_stock"] > 0
-    }
-    sin_stock = {
-        k: v for (k, v) in prod.items() if v["cantidad_unidades_en_stock"] == 0
-    }
+    pattern_v = f"SELECT * FROM productos WHERE fecha_de_vencimiento != 'N/A' AND cantidad_unidades_en_stock > 0 AND fecha_de_vencimiento < '{hoy}'"
+    vencidos = engine.consultar_base(pattern_v)
+
+    pattern_sc = f"SELECT * FROM productos WHERE cantidad_unidades_en_stock <= {umbral_stock_critico} AND cantidad_unidades_en_stock > 0"
+    stock_critico = engine.consultar_base(pattern_sc)
+
+    pattern_ss = "SELECT * FROM productos WHERE cantidad_unidades_en_stock = 0"
+    sin_stock = engine.consultar_base(pattern_ss)
 
     total_de_lotes = len(prod)
-    total_de_unidades = sum(v["cantidad_unidades_en_stock"] for v in prod.values())
+    pattern_tu = "SELECT SUM(cantidad_unidades_en_stock) FROM productos"
+    total_de_unidades = engine.consultar_base(pattern_tu)[0][0]
     total_de_vencidos = len(vencidos)
     total_vencimiento_critico = len(vencimiento_critico)
     total_sin_stock = len(sin_stock)
@@ -126,7 +113,6 @@ while not salida_menu:
                 console.print(check, modificador_vencimiento)
 
             input("ENTER para volver al menu ")
-            continue
 
         case "2":
             borrar_consola()
@@ -160,9 +146,11 @@ while not salida_menu:
                 "Precio", justify="right", style="wheat4 bold", no_wrap=True
             )
 
-            for k, v in prod.items():
-                unidades = v["cantidad_unidades_en_stock"]
-                fechas = v["fecha_de_vencimiento"]
+            items = engine.consultar_base("SELECT * FROM productos")
+            for item in items:
+                unidades = int(item[7])
+
+                fechas = item[6]
 
                 if (
                     unidades != "N/A"
@@ -185,8 +173,7 @@ while not salida_menu:
                     fecha_con_alerta = f"[yellow bold ]{fechas}[/bold yellow ]"
                 elif (
                     fechas != "N/A"
-                    and hoy
-                    > datetime.strptime(v["fecha_de_vencimiento"], "%Y-%m-%d").date()
+                    and hoy > datetime.strptime(fechas, "%Y-%m-%d").date()
                 ):
                     fecha_con_alerta = f"[red bold ]{fechas}[/bold red ]"
 
@@ -194,29 +181,28 @@ while not salida_menu:
                     fecha_con_alerta = f"{fechas}"
 
                 table.add_row(
-                    f"{k[1]}",
-                    f"{k[0]}",
-                    f"{v['producto']}",
-                    f"{v['pais_de_origen']}",
+                    f"{item[0]}",
+                    f"{item[1]}",
+                    f"{item[2]}",
+                    f"{item[3]}",
                     f"{fecha_con_alerta}",
                     f"{stock_con_alerta}",
-                    f"{v['precio']}",
+                    f"{item[7]}",
                 )
 
             console.print(table)
 
             input("\nENTER para volver al menu ")
 
-            continue
-
         case "3":
             borrar_consola()
-            lotes_no_validos = sin_stock | vencidos
+
+            lotes_no_validos = sin_stock + vencidos
             consolidado = []
 
             titulo = "[bold underline]TOTAL DE LOTES NO VÁLIDOS PARA LA VENTA[/bold underline]\n"
-            for k, v in lotes_no_validos.items():
-                consolidado.append((k, v))
+            for registro in lotes_no_validos:
+                consolidado.append(registro)
 
             if consolidado == []:
                 console.print(
@@ -225,7 +211,6 @@ while not salida_menu:
             else:
                 console.print(crear_tabla(consolidado, titulo))
             input("\nENTER para volver al menu ")
-            continue
 
         case "4":
             while True:
@@ -248,19 +233,9 @@ while not salida_menu:
                 print()
 
                 resultados = []
-                for k, v in prod.items():
-                    if (
-                        query in k[0].lower()
-                        or query in k[1].lower()
-                        or query in v["producto"].lower()
-                        or query in v["nombre_fantasia"].lower()
-                        or query in v["pais_de_origen"].lower()
-                        or query in v["fecha_de_vencimiento"].lower()
-                        or query in str(v["cantidad_unidades_en_stock"]).lower()
-                        or query in str(v["precio"]).lower()
-                        or query in v["pequena_descripcion"].lower()
-                    ):
-                        resultados.append((k, v))
+                pattern_query = f"SELECT * FROM productos WHERE producto LIKE '%{query}%' OR nombre_fantasia LIKE '%{query}%' OR pais_de_origen LIKE '%{query}%' OR fecha_de_vencimiento LIKE '%{query}%' OR cantidad_unidades_en_stock LIKE '%{query}%' OR precio LIKE '%{query}%' OR pequena_descripcion LIKE '%{query}%'"
+                resultados = engine.consultar_base(pattern_query)
+
                 if resultados == []:
                     console.print(
                         "[bold red on white ]NO SE ENCONTRARON RESULTADOS[/bold red on white ]"
@@ -269,11 +244,10 @@ while not salida_menu:
                     console.print(crear_tabla(resultados, titulo, query))
 
                 salida = input("\nENTER para continuar... ")
-                continue
 
         case "5":
             borrar_consola()
-            ultima_clave = list(prod.keys())[-1]
+            lote = "Id Incremental"
             console.print("[bold underline]AGREGAR LOTE[/bold underline]\n")
             sku = []
             for i in range(3):
@@ -326,25 +300,21 @@ while not salida_menu:
 
             borrar_consola()
 
-            lote = (sku, f"LOTE-{int(ultima_clave[1].split('-')[1]) + 1}")
             titulo = "[bold underline]LOTE A REGISTRAR[/bold underline] 👇\n"
             console.print(
                 crear_tabla(
                     [
                         (
-                            lote,
-                            {
-                                "producto": producto,
-                                "nombre_fantasia": nombre_fantasia,
-                                "pais_de_origen": pais_de_origen,
-                                "fecha_de_compra": fecha_de_compra,
-                                "fecha_de_vencimiento": fecha_de_vencimiento,
-                                "cantidad_unidades_en_stock": int(
-                                    cantidad_unidades_en_stock
-                                ),
-                                "precio": float(precio),
-                                "pequena_descripcion": pequena_descripcion,
-                            },
+                            "Id Incremental",
+                            sku,
+                            producto,
+                            nombre_fantasia,
+                            fecha_de_compra,
+                            pais_de_origen,
+                            fecha_de_vencimiento,
+                            int(cantidad_unidades_en_stock),
+                            float(precio),
+                            pequena_descripcion,
                         )
                     ],
                     titulo,
@@ -355,51 +325,58 @@ while not salida_menu:
                 console.print("\nNo se Agregó el Lote.")
                 input("\nENTER para volver al menu ")
                 continue
+            registro = (
+                sku,
+                producto,
+                nombre_fantasia,
+                fecha_de_compra,
+                pais_de_origen,
+                fecha_de_vencimiento,
+                int(cantidad_unidades_en_stock),
+                float(precio),
+                pequena_descripcion,
+            )
 
-            prod[lote] = {
-                "producto": producto,
-                "nombre_fantasia": nombre_fantasia,
-                "pais_de_origen": pais_de_origen,
-                "fecha_de_compra": fecha_de_compra,
-                "fecha_de_vencimiento": fecha_de_vencimiento,
-                "cantidad_unidades_en_stock": int(cantidad_unidades_en_stock),
-                "precio": float(precio),
-                "pequena_descripcion": pequena_descripcion,
-            }
-            console.print("\nLote agregado con éxito\n")
+            engine.agregar_producto(registro)
 
             input("\nENTER para volver al menu ")
-            continue
+
         case "6":
             borrar_consola()
-            por_borrar = []
+
             console.print("[bold underline]BORRAR LOTE[/bold underline]\n")
             lote_id = input("Número de Lote a Borrar: ").strip()
-            lote = f"LOTE-{lote_id}"
-            for k, v in prod.items():
-                if k[1] == lote:
-                    por_borrar.append((k, v))
-                    break
-            if por_borrar == []:
+            if not lote_id.isdigit():
+                console.print("\n[red on white] Dato no Valido.[/red on white]")
+                input("\nENTER para volver al menu ")
+                continue
+            pattern_id = f"SELECT * FROM productos WHERE lote = {lote_id}"
+            para_borrar = engine.consultar_base(pattern_id)
+
+            if para_borrar != []:
+                console.print(
+                    crear_tabla(
+                        para_borrar,
+                        "[bold underline]LOTE A BORRAR[/bold underline] 👇\n",
+                    )
+                )
+                borrar = (
+                    input("\n🛑\tConfirma eliminar el Lote? (s/n): ").strip().lower()
+                )
+                if borrar != "s":
+                    console.print("No se borró.")
+                    input("\nENTER para volver al menu ")
+                    continue
+                else:
+                    engine.eliminar_lote(lote_id)
+                input("\nENTER para volver al menu ")
+
+            else:
                 console.print(
                     "\n[red on white] ADVERTENCIA: Lote Inexistente. [/red on white]\n"
                 )
                 input("\nENTER para volver al menu ")
-                continue
-            titulo = "[bold underline]LOTE A BORRAR[/bold underline] 👇\n"
-            console.print(crear_tabla(por_borrar, titulo))
 
-            borrar = input("\n🛑\tConfirma eliminar el Lote? (s/n): ").strip().lower()
-            if borrar != "s":
-                console.print("No se borró.")
-                input("\nENTER para volver al menu ")
-                continue
-            del prod[por_borrar[0][0]]
-            console.print(f"\n{lote} eliminado.\n")
-
-            input("\nENTER para volver al menu ")
-            continue
         case "7":
             console.print("Saliendo...\n")
             salida_menu = True
-

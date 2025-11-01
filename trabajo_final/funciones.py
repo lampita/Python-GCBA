@@ -48,19 +48,6 @@ def validar_fecha(cadena_fecha):
         return False
 
 
-def agregar_ultima_clave(clave):
-    penultimo_lote = []
-    for caracter in clave[::-1]:
-        if caracter.isdigit():
-            penultimo_lote.append(caracter)
-        else:
-            break
-    penultimo_lote.reverse()
-    ultima_clave = "".join(penultimo_lote)
-    ultima_clave = str(int(ultima_clave) + 1)
-    return "LOTE-" + ultima_clave
-
-
 def crear_tabla(resultados, titulo, query=None):
     table = Table(title=titulo)
     table.add_column("Lote", justify="left", style="orange3 bold")
@@ -74,47 +61,47 @@ def crear_tabla(resultados, titulo, query=None):
     table.add_column("Descripción", justify="left")
 
     for resultado in resultados:
-        lote = Text(str(resultado[0][1]))
+        lote = Text(str(resultado[0]))
         if query is not None:
             lote.highlight_words([query], style="bold yellow", case_sensitive=False)
 
-        sku = Text(str(resultado[0][0]))
+        sku = Text(str(resultado[1]))
         if query is not None:
             sku.highlight_words([query], style="bold yellow", case_sensitive=False)
 
-        producto = Text(str(resultado[1]["producto"]))
+        producto = Text(str(resultado[2]))
         if query is not None:
             producto.highlight_words([query], style="bold yellow", case_sensitive=False)
 
-        marca = Text(str(resultado[1]["nombre_fantasia"]))
+        marca = Text(str(resultado[3]))
         if query is not None:
             marca.highlight_words([query], style="bold yellow", case_sensitive=False)
 
-        origen = Text(str(resultado[1]["pais_de_origen"]))
+        origen = Text(str(resultado[5]))
         if query is not None:
             origen.highlight_words([query], style="bold yellow", case_sensitive=False)
 
-        vence = Text(str(resultado[1]["fecha_de_vencimiento"]))
+        vence = Text(str(resultado[6]))
         if query is not None:
             vence.highlight_words([query], style="bold yellow", case_sensitive=False)
         elif (
-            resultado[1]["fecha_de_vencimiento"] != "N/A"
+            resultado[6] != "N/A"
             and hoy
-            > datetime.strptime(resultado[1]["fecha_de_vencimiento"], "%Y-%m-%d").date()
+            > datetime.strptime(resultado[6], "%Y-%m-%d").date()
         ):
             vence.style = "red bold"
 
-        stock = Text(str(resultado[1]["cantidad_unidades_en_stock"]))
+        stock = Text(str(resultado[7]))
         if query is not None:
             stock.highlight_words([query], style="bold yellow", case_sensitive=False)
-        elif resultado[1]["cantidad_unidades_en_stock"] == 0:
+        elif resultado[7] == 0:
             stock.style = "red bold"
 
-        precio = Text(str(resultado[1]["precio"]))
+        precio = Text(str(resultado[8]))
         if query is not None:
             precio.highlight_words([query], style="bold yellow", case_sensitive=False)
 
-        descripcion = Text(str(resultado[1]["pequena_descripcion"]))
+        descripcion = Text(str(resultado[9]))
         if query is not None:
             descripcion.highlight_words(
                 [query], style="bold yellow", case_sensitive=False

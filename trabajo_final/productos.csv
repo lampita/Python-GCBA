@@ -1,0 +1,31 @@
+lote,sku,producto,nombre_fantasia,fecha_de_compra,pais_de_origen,fecha_de_vencimiento,cantidad_unidades_en_stock,precio,pequena_descripcion
+1,FRUT-BAN-BATROP,Bananas, Bananas Tropicales,2025-09-15,Ecuador,2025-09-20,150,1.99,Bananas de la variedad Cavendish dulces y cremosas ideales para un snack saludable o postres.
+2,LAC-YOG-YODEL,Yogur Natural,Yogur Delice Sin Azúcar,2025-09-14,Argentina,2025-10-05,85,2.50,Yogur sin azúcar cremoso y rico en probióticos. Perfecto para el desayuno o para mezclar con frutas.
+3,QUES-MOZ-MOZDIT,Queso Mozzarella,Mozzarella Fresca D'Italia,2025-09-16,Italia,2025-10-10,60,8.75,Queso mozzarella fresco ideal para pizzas lasañas y ensaladas. Textura suave y sabor delicado.
+4,LAC-LEC-LEPUVI,Leche Entera,Leche Pura Vida,2025-09-15,Uruguay,2025-10-25,120,1.25,Leche entera pasteurizada y homogeneizada. Envase de 1 litro rica en calcio.
+5,PAN-MOL-ARTES,Pan de Molde Integral,Panadería Artesanal Integral,2025-09-17,Chile,2025-09-30,45,3.10,Pan de molde elaborado con harina 100% integral. Fuente de fibra sin conservantes.
+6,HUE-GRA-HUCAMFRE,Huevos de Granja,Huevos De Campo Frescos",2025-09-16,Argentina,2025-10-15,90,4.99,Media docena de huevos de gallina de libre pastoreo categoría A.
+7,FRUT-MAN-REDDEL,Manzanas Red Delicious,Manzanas Red Delicia,2025-09-14,Estados Unidos,2025-10-08,75,2.75,Manzanas grandes de color rojo intenso y sabor dulce. Crujientes y jugosas.
+8,GRAN-ARR-APREM,Arroz Integral,Arroz Premium Grano Entero,2025-09-12,Perú,2026-03-20,0,1.50,Arroz de grano largo rico en fibra y nutrientes. Ideal para guarniciones y ensaladas.
+9,CARN-POL-PODCORR,Pollo Entero Congelado,Pollo De Corral Congelado",2025-09-10,Brasil,2026-06-30,35,9.50,Pollo entero limpio y listo para cocinar. Congelado peso aproximado 1.5 kg.
+10,ACEI-OLI-ACOROME,Aceite de Oliva Extra Virgen,Oro Mediterráneo,2025-09-11,España,2026-11-01,50,12.00,Aceite de oliva de primera prensa en frío. Ideal para aderezos ensaladas y cocina gourmet.
+11,PASTA-ESP-ELAMAMA,Pasta Espagueti,Espagueti La Mamma,2025-09-13,Italia,2026-05-15,180,1.80,Pasta de trigo duro ideal para salsas boloñesa o carbonara. Cocción al dente en 8 minutos.
+12,CONSERV-TOM-TOLAHUE,Tomates Perita en Lata,Tomates La Huerta,2025-09-12,Italia,2027-02-10,95,2.20,Tomates enteros pelados y envasados ideales para salsas y guisos. Peso neto 400g.
+13,CONSERV-ATN-ATUALM,Atún en Aceite,Atún Almirante,2025-09-11,Tailandia,2026-10-20,130,3.50,Atún en trozos envasado en aceite vegetal. Fuente de omega-3 y proteínas.
+14,AZUCAR-BLA-DULTEN,Azúcar Blanca,Dulce Tentación,2025-09-10,Brasil,2027-05-01,200,0.90,Azúcar de caña refinada de uso general para repostería bebidas y cocina.
+15,SAB-SAL-SALPACI,Sal Marina Fina",Sal Marina del Pacífico,2025-09-09,Chile,2028-01-01,150,0.75,Sal marina fina yodada. Ideal para realzar el sabor de tus comidas.
+16,BEB-CAFE-CAFDESP,Café Tostado y Molido,Café Despertar Andino,2025-09-13,Colombia,2026-08-15,70,5.50,Café 100% arábica con notas de chocolate y caramelo. Paquete de 250g.
+17,BEB-TE-ENGBRE,Té Negro,Té English Breakfast,2025-09-12,India,2027-03-20,80,4.00,Té negro clásico en saquitos perfecto para energizar tus mañanas. Caja con 25 unidades.
+18,GOLOS-GAL-GASALUD,Galletas de Avena,Galletas Saludables,2025-09-16,Reino Unido,2025-11-30,100,3.20,Galletas crujientes de avena con pasas. Ideales para el desayuno o la merienda.
+19,GOLOS-CHO-CHOCOSUI,Chocolate con Leche,Chocolate Suizo Alpino,2025-09-15,Suiza,2026-02-28,65,3.90,Barra de chocolate cremoso con leche 100g. Elaborado con cacao de alta calidad.
+20,CEREAL-MAI-MACROC,Cereal de Maíz,Maíz Crocante,2025-09-14,México",2026-04-10,90,4.50,Cereal de copos de maíz tostados. Ideal para el desayuno con leche fría.
+21,BEB-JUG-NARACIT,Jugo de Naranja,Jugo Naranja Cítrica,2025-09-17,Brasil,2025-12-05,75,2.80,Jugo de naranja exprimido sin pulpa. Envase de 1 litro pasteurizado.
+22,BEB-GAS-COCOLA,Coca-Cola 2L,Coca-Cola,2025-09-16,Estados Unidos,2026-03-31,110,3.00,Bebida gaseosa sabor cola en botella de 2 litros.
+23,HOGAR-PAP-PASUAV,Papel Higiénico,Papel Suavehogar,2025-09-15,Argentina,N/A,50,7.50,Paquete de 12 rollos de papel higiénico de doble hoja suave y absorbente.
+24,HOGAR-JAB-ROPBLA,Jabón en Polvo,Jabón Ropa Blanca,2025-09-14,Brasil,N/A,0,6.25,Detergente en polvo para lavar la ropa. Apto para todo tipo de tejidos remueve manchas difíciles.
+25,CUIDADO-ESP-PIELSUA,Esponja de Baño,Esponja Piel Suave,2025-09-17,China,N/A,85,1.50,Esponja suave para el baño o la ducha. Crea abundante espuma y exfolia suavemente la piel.
+26,SNACKS-PAP-PAPCRU,Papas Fritas,Papas Crujientes,2025-09-16,Estados Unidos,2026-01-15,95,2.10,Clásicas papas fritas con sal en bolsa grande. Perfectas para compartir o para un aperitivo.
+27,GOLOS-GAL-GAVAINI,Galletas de Vainilla,Galletas Vainilla Clásicas,2025-09-15,Argentina,2025-11-20,120,1.80,Galletas dulces con sabor a vainilla ideales para mojar en leche o café. Paquete de 200g.
+28,SAB-MIE-MIENATUDEL,Miel Pura de Abeja,Miel Natural Delicia,2025-09-28,México,2025-09-28,55,6.50,Miel de abeja 100% natural sin conservantes. Ideal para endulzar postres bebidas o tostadas.
+29,CUIDADO-PAS-PASSONR,Pasta de Dientes,Pasta Dientes Sonrisa,2025-09-13,Brasil,2025-09-28,80,3.75,Pasta de dientes con flúor. Sabor menta fresca para una limpieza completa
+30,CUIDADO-SHA-SHAPELOLIM,Shampoo Anticaspa,Shampoo Pelo Limpio,2025-09-12,México,2025-09-28,1,5.90,Shampoo de 400ml formulado para eliminar y prevenir la caspa. Deja el cabello suave y sin residuos.

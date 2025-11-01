@@ -33,18 +33,6 @@ campos = (
     "precio",
     "pequena_descripcion",
 )
-lote = (
-    "MG-BAN-PE",
-    "Banana",
-    "Pedorra",
-    "2025-06-12",
-    "Brasil",
-    "2025-06-18",
-    20,
-    1.90,
-    "banana de mierda",
-)
-
 
 def agregar_producto(lote):
     conexion = sqlite3.connect(ruta_db_completa)
@@ -56,21 +44,24 @@ def agregar_producto(lote):
         )
 
         conexion.commit()
+        print ("\nLote agregado con éxito")
+
 
     except sqlite3.Error as e:
-        print(f"Ocurrió un error al insertar el producto: {e}")
+        print(f"\nOcurrió un error al insertar el producto: {e}")
+        
 
     finally:
         if conexion:
             conexion.close()
 
 
-def consultar_base():
+def consultar_base(pattern):
     conexion = sqlite3.connect(ruta_db_completa)
     cursor = conexion.cursor()
     try:
         productos = []
-        cursor.execute("SELECT * FROM productos")
+        cursor.execute(pattern)
         items = cursor.fetchall()
 
         for item in items:
@@ -84,6 +75,7 @@ def consultar_base():
     finally:
         if conexion:
             conexion.close()
+
 
 def consultar_base_segun(query):
     conexion = sqlite3.connect(ruta_db_completa)
@@ -105,27 +97,41 @@ def consultar_base_segun(query):
         if conexion:
             conexion.close()
 
-def eliminar_lote(lote): #falta confirmar que el registro exista
+
+def eliminar_lote(lote): 
     conexion = sqlite3.connect(ruta_db_completa)
     cursor = conexion.cursor()
     try:
-        cursor.execute("DELETE FROM productos WHERE lote=?",(lote,))
+        cursor.execute("DELETE FROM productos WHERE lote=?", (lote,))
 
-        print( "Borrado Correctamente")
+        print("Borrado Correctamente")
         conexion.commit()
 
-
     except sqlite3.Error as e:
-        print(f"Ocurrió un error al borrar el producto: {e}")
+        print(f"Ocurrió un error al borrar el lote: {e}")
 
     finally:
         if conexion:
             conexion.close()
 
-#agregar_producto(lote)
-#print(consultar_base())
-#print(consultar_base_segun("pera"))
-#eliminar_lote()
+
+def actualizar_lote(lote, unidades):
+    conexion = sqlite3.connect(ruta_db_completa)
+    cursor = conexion.cursor()
+    try:
+        cursor.execute(
+            "UPDATE productos SET cantidad_unidades_en_stock=? WHERE lote=?", (unidades,lote,)
+        )
+
+        print("Actualizado Correctamente")
+        conexion.commit()
+
+    except sqlite3.Error as e:
+        print(f"Ocurrió un error al actualizar el lote: {e}")
+
+    finally:
+        if conexion:
+            conexion.close()
 
 
 
