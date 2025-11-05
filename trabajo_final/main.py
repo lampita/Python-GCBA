@@ -322,7 +322,7 @@ while not salida_menu:
             )
             agregar = input("\n⚠️\tConfirma agregar Lote? (s/n): ").strip().lower()
             if agregar != "s":
-                console.print("\nNo se Agregó el Lote.")
+                console.print("\n[red on white] No se Agregó el Lote. [/red on white]")
                 input("\nENTER para volver al menu ")
                 continue
             registro = (
@@ -337,7 +337,11 @@ while not salida_menu:
                 pequena_descripcion,
             )
 
-            engine.agregar_producto(registro)
+            agregado = engine.agregar_producto(registro)
+            if agregado:
+                console.print(
+                    "\n[bold blue1 on white] Lote Agregado Correctamente. [/bold blue1 on white]")
+
 
             input("\nENTER para volver al menu ")
 
@@ -364,11 +368,14 @@ while not salida_menu:
                     input("\n🛑\tConfirma eliminar el Lote? (s/n): ").strip().lower()
                 )
                 if borrar != "s":
-                    console.print("No se borró.")
+                    console.print("\n[red on white] No se borró. [/red on white]")
                     input("\nENTER para volver al menu ")
                     continue
                 else:
-                    engine.eliminar_lote(lote_id)
+                    borrado=engine.eliminar_lote(lote_id)
+                    if borrado:
+                        console.print("\n[bold blue1 on white] Lote Borrado Correctamente. [/bold blue1 on white]")
+
                 input("\nENTER para volver al menu ")
 
             else:

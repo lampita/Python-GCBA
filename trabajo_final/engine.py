@@ -44,7 +44,8 @@ def agregar_producto(lote):
         )
 
         conexion.commit()
-        print ("\nLote agregado con éxito")
+        return True
+        
 
 
     except sqlite3.Error as e:
@@ -103,9 +104,10 @@ def eliminar_lote(lote):
     cursor = conexion.cursor()
     try:
         cursor.execute("DELETE FROM productos WHERE lote=?", (lote,))
-
-        print("Borrado Correctamente")
         conexion.commit()
+        return True
+        
+        
 
     except sqlite3.Error as e:
         print(f"Ocurrió un error al borrar el lote: {e}")
