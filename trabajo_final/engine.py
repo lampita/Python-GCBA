@@ -117,13 +117,18 @@ def eliminar_lote(lote):
             conexion.close()
 
 
-def actualizar_lote(lote, unidades):
+def actualizar_lote(lote, unidades=None, precio=None):
     conexion = sqlite3.connect(ruta_db_completa)
     cursor = conexion.cursor()
-    try:
-        cursor.execute(
-            "UPDATE productos SET cantidad_unidades_en_stock=? WHERE lote=?", (unidades,lote,)
+    try:        
+        if unidades is not None:
+            cursor.execute(
+            "UPDATE productos SET cantidad_unidades_en_stock=? WHERE lote=?", (int(unidades),lote,)
         )
+        if precio is not None:
+            cursor.execute(
+                "UPDATE productos SET precio=? WHERE lote=?", (float(precio),lote,)
+            )
 
         print("Actualizado Correctamente")
         conexion.commit()

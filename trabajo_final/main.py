@@ -188,7 +188,7 @@ while not salida_menu:
                     f"{item[3]}",
                     f"{fecha_con_alerta}",
                     f"{stock_con_alerta}",
-                    f"{item[7]}",
+                    f"{item[8]}",
                 )
 
             console.print(table)
@@ -410,6 +410,32 @@ while not salida_menu:
                     console.print("\n[red on white] No se actualizó. [/red on white]")
                     input("\nENTER para volver al menu ")
                     continue
+                else:
+                    nuevo_stock = input("Nuevo Stock: ").strip()
+                    if not nuevo_stock.isdigit():
+                        nuevo_stock = None
+                        console.print(
+                            "\n[red on white] ADVERTENCIA: No se modifico el Stock. [/red on white]\n"
+                        )
+                    nuevo_precio = input("Nuevo Precio: ").strip()
+                    
+                    if not float_es_valido(nuevo_precio):
+                        nuevo_precio = None
+                        console.print(
+                            "\n[red on white] ADVERTENCIA: No se modifico el Precio. [/red on white]\n"
+                        )
+                        
+                    if nuevo_stock is None and nuevo_precio is None:
+                        console.print("\n[red on white] No se hicieron modificaciones. [/red on white]")
+                        input("\nENTER para volver al menu ")
+                        continue
+                    
+                    else:
+                        engine.actualizar_lote(lote_id, nuevo_stock, nuevo_precio)
+                        console.print("\n[bold blue1 on white] Lote Actualizado Correctamente. [/bold blue1 on white]")
+                        input("\nENTER para volver al menu ")
+                    
+
             else:
                 console.print(
                     "\n[red on white] ADVERTENCIA: Lote Inexistente. [/red on white]\n"
