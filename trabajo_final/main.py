@@ -73,7 +73,8 @@ while not salida_menu:
     4. Buscar por palabra clave.
     5. Agregar un Lote.
     6. Eliminar un Lote.
-    7. Salir.\n""")
+    7. Actualizar Stock o Precio.
+    8. Salir.\n""")
 
     opcion_menu = input("Ingresar opcion:  ")
 
@@ -187,7 +188,7 @@ while not salida_menu:
                     f"{item[3]}",
                     f"{fecha_con_alerta}",
                     f"{stock_con_alerta}",
-                    f"{item[7]}",
+                    f"{item[8]}",
                 )
 
             console.print(table)
@@ -385,5 +386,62 @@ while not salida_menu:
                 input("\nENTER para volver al menu ")
 
         case "7":
+            borrar_consola()
+            console.print("[bold underline]ACTUALIZAR STOCK O PRECIO[/bold underline]\n")
+            lote_id = input("Número de Lote a Actualizar: ").strip()
+            if not lote_id.isdigit():
+                console.print("\n[red on white] Dato no Valido.[/red on white]")
+                input("\nENTER para volver al menu ")
+                continue
+            pattern_id = f"SELECT * FROM productos WHERE lote = {lote_id}"
+            para_actualizar = engine.consultar_base(pattern_id)
+
+            if para_actualizar != []:
+                console.print(
+                    crear_tabla(
+                        para_actualizar,
+                        "[bold underline]LOTE A ACTUALIZAR[/bold underline] 👇\n",
+                    )
+                )
+                actualizar = (
+                    input("\n⚠️\tConfirma actualizar el Lote? (s/n): ").strip().lower()
+                )
+                if actualizar != "s":
+                    console.print("\n[red on white] No se actualizó. [/red on white]")
+                    input("\nENTER para volver al menu ")
+                    continue
+                else:
+                    nuevo_stock = input("Nuevo Stock: ").strip()
+                    if not nuevo_stock.isdigit():
+                        nuevo_stock = None
+                        console.print(
+                            "\n[red on white] ADVERTENCIA: No se modifico el Stock. [/red on white]\n"
+                        )
+                    nuevo_precio = input("Nuevo Precio: ").strip()
+                    
+                    if not float_es_valido(nuevo_precio):
+                        nuevo_precio = None
+                        console.print(
+                            "\n[red on white] ADVERTENCIA: No se modifico el Precio. [/red on white]\n"
+                        )
+                        
+                    if nuevo_stock is None and nuevo_precio is None:
+                        console.print("\n[red on white] No se hicieron modificaciones. [/red on white]")
+                        input("\nENTER para volver al menu ")
+                        continue
+                    
+                    else:
+                        engine.actualizar_lote(lote_id, nuevo_stock, nuevo_precio)
+                        console.print("\n[bold blue1 on white] Lote Actualizado Correctamente. [/bold blue1 on white]")
+                        input("\nENTER para volver al menu ")
+                    
+
+            else:
+                console.print(
+                    "\n[red on white] ADVERTENCIA: Lote Inexistente. [/red on white]\n"
+                )
+                input("\nENTER para volver al menu ")
+        
+        case "8":
             console.print("Saliendo...\n")
             salida_menu = True
