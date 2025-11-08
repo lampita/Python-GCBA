@@ -29,3 +29,53 @@ lote,sku,producto,nombre_fantasia,fecha_de_compra,pais_de_origen,fecha_de_vencim
 28,SAB-MIE-MIENATUDEL,Miel Pura de Abeja,Miel Natural Delicia,2025-09-28,México,2025-09-28,55,6.50,Miel de abeja 100% natural sin conservantes. Ideal para endulzar postres bebidas o tostadas.
 29,CUIDADO-PAS-PASSONR,Pasta de Dientes,Pasta Dientes Sonrisa,2025-09-13,Brasil,2025-09-28,80,3.75,Pasta de dientes con flúor. Sabor menta fresca para una limpieza completa
 30,CUIDADO-SHA-SHAPELOLIM,Shampoo Anticaspa,Shampoo Pelo Limpio,2025-09-12,México,2025-09-28,1,5.90,Shampoo de 400ml formulado para eliminar y prevenir la caspa. Deja el cabello suave y sin residuos.
+31,ABRIGO-LANA-AZULM,Abrigo de Lana,Abrigo Calor Máximo,2025-10-01,China,2030-10-01,15,89.99,Abrigo de mezcla de lana, talla M. Ideal para invierno. Color azul marino.
+32,TE-VERDE-CAJA100,Té Verde,Té Sereno Oriental,2025-09-25,Japón,2027-09-25,200,4.50,Caja de 100 bolsitas de té verde sencha. Antioxidante y energizante.
+33,AURIC-BT-NEGROX1,Auriculares Bluetooth,Sonido Puro X1,2025-10-10,Corea del Sur,2035-10-10,45,35.00,Auriculares inalámbricos con cancelación de ruido. 8 horas de batería.
+34,LIBRO-AVENTURA-01,Novela de Aventura,El Mapa Perdido,2025-10-05,España,2050-10-05,90,12.99,Tapa blanda. Primer tomo de la saga de aventuras 'Los Exploradores'.
+35,CAFE-GRANO-ARAB1K,Café en Grano,Granos de Altura,2025-09-15,Colombia,2026-09-15,120,18.75,Café Arábica en grano, tueste medio. Bolsa de 1kg. Sabor intenso.
+36,CAMISETA-ALGODON-S,Camiseta Básica,Comodidad Total,2025-10-18,Perú,2030-10-18,75,9.50,Camiseta de algodón 100%, talla S. Color blanco. Cuello redondo.
+37,LAPTOP-MODELO-PRO,Portátil Ultraligero,Laptop Pro 3000,2025-09-20,Estados Unidos,2038-09-20,10,999.00,Portátil de 14 pulgadas, 16GB RAM, 512GB SSD. Procesador de última generación.
+38,ZAPAS-CORRER-42BL,Zapatillas Running,Turbo Velocidad,2025-10-02,Vietnam,2028-10-02,30,59.95,Zapatillas de running para hombre, talla 42. Color negro/azul.
+39,CREMA-FACIAL-NOC,Crema Hidratante,Esencia Nocturna,2025-09-28,Francia,2027-03-28,150,22.50,Crema facial de noche con ácido hialurónico. Para todo tipo de piel.
+40,PANEL-SOLAR-50W,Panel Solar,Energía Limpia 50,2025-09-10,Alemania,2045-09-10,5,150.00,Panel solar monocristalino de 50W. Ideal para caravanas y jardines.
+41,SILLA-OFICINA-ERG,Silla de Oficina,Ergo Confort,2025-10-22,Italia,2035-10-22,25,180.00,Silla de oficina ergonómica con soporte lumbar. Tejido de malla transpirable.
+42,VINO-TINTO-RESERVA,Vino Tinto Reserva,Cosecha Selecta 2020,2025-09-01,Chile,2030-09-01,60,14.99,Botella de 750ml. Vino tinto Cabernet Sauvignon reserva.
+43,TELEFONO-FIJO-BT,Teléfono Fijo,Clásico Inalámbrico,2025-10-08,Canadá,2032-10-08,35,45.90,Teléfono inalámbrico DECT con contestador automático.
+44,MALETA-RIGIDA-MED,Maleta de Viaje,Viajero Extremo,2025-09-17,Brasil,2040-09-17,40,79.00,Maleta rígida mediana con 4 ruedas giratorias. Color gris.
+45,ACEITE-OLIVA-1L-EXV,Aceite de Oliva,Oro Verde Premium,2025-10-03,Grecia,2026-10-03,180,9.99,Botella de 1 litro de aceite de oliva virgen extra. Primera prensada en frío.
+46,PELICULA-DVD-CLAS,Película en DVD,Leyendas del Cine,2025-10-15,Reino Unido,2050-10-15,110,7.50,Edición especial en DVD de un clásico del cine de los 80.
+47,PERFUME-HOMBRE-50M,Perfume Masculino,Aroma Intenso,2025-09-29,Alemania,2027-09-29,80,49.90,Perfume de hombre, eau de toilette, 50ml. Fragancia amaderada.
+48,DRON-FOTO-HD,Dron con Cámara,Cielo Explorador,2025-10-20,China,2030-10-20,8,199.99,Mini dron plegable con cámara HD y control de altitud.
+49,CALCETINES-DEPORTE,Calcetines Deportivos,Pies Secos Pro,2025-10-07,Portugal,2028-10-07,250,3.50,Pack de 3 pares de calcetines deportivos. Tejido transpirable.
+50,TABLETA-10INCH-32G,Tablet de 10 pulgadas,Tablet T10 Lite,2025-09-05,Estados Unidos,2030-09-05,18,129.00,Tablet Android de 10.1 pulgadas, 32GB de almacenamiento.
+51,MASCARILLA-PELO-500G,Mascarilla Capilar,Nutrición Profunda,2025-10-24,Brasil,2027-04-24,95,15.20,Mascarilla reparadora para cabello dañado. Pote de 500 gramos.
+52,BICICLETA-MONTAÑA-M,Bicicleta de Montaña,Trail Blazer,2025-09-11,Taiwán,2035-09-11,3,350.00,Bicicleta de montaña, cuadro de aluminio, 21 velocidades. Talla M.
+53,SIERRA-CIRCULAR-PRO,Sierra Circular,Corte Perfecto 2000,2025-10-14,Japón,2030-10-14,12,85.50,Sierra circular eléctrica de 1500W. Hoja de 7.25 pulgadas.
+54,CARGADOR-USB-RAPIDO,Cargador de Pared,Carga Ultra Rápida,2025-09-23,Vietnam,2035-09-23,300,10.99,Cargador USB-C de 20W para carga rápida de dispositivos.
+55,ALMOHADA-VISCO-REG,Almohada Viscoelástica,Sueño Adaptable,2025-10-06,Polonia,2030-10-06,55,29.90,Almohada de espuma viscoelástica con memoria. Funda lavable.
+56,JUEGO-MESA-ESTRATEG,Juego de Mesa,Conquista Mundial,2025-09-19,Alemania,2050-09-19,70,42.00,Juego de estrategia para 2-4 jugadores. Duración promedio 90 minutos.
+57,DETERGENTE-LIQUIDO-3L,Detergente Líquido,Ropa Limpia Max,2025-10-28,España,2026-10-28,140,8.50,Bidón de 3 litros de detergente líquido concentrado para ropa.
+58,RELOJ-DEPORTIVO-GPS,Reloj Deportivo,Pulso Extremo GPS,2025-09-03,Finlandia,2033-09-03,22,149.99,Reloj deportivo con GPS, monitor de ritmo cardíaco y contador de pasos.
+59,LIBRETA-TAPA-DURA,Libreta Ejecutiva,Notas de Éxito,2025-10-11,India,2050-10-11,160,5.99,Libreta A5 de tapa dura con 200 hojas rayadas. Papel de alta calidad.
+60,BOMBILLA-LED-10W,Bombilla LED,Luz Cálida E27,2025-10-04,China,2030-10-04,500,2.50,Bombilla LED de 10W, equivalente a 75W. Rosca E27. Luz blanca cálida.
+61,PIENSO-PERRO-ADULT-5K,Pienso para Perro,Nutrición Canina Pro,2025-09-27,Argentina,2026-03-27,70,25.99,Alimento seco para perros adultos. Sabor pollo y arroz. Saco de 5kg.
+62,IMPRESORA-LASER-MONO,Impresora Láser,Imprime Rápido M1,2025-10-16,Japón,2035-10-16,7,110.00,Impresora láser monocromática. Conectividad WiFi y USB.
+63,AGUA-MINERAL-BOTELLA,Agua Mineral,Fuente Cristalina,2025-09-08,Francia,2027-09-08,400,0.75,Botella de 1 litro de agua mineral natural sin gas. Pack de 12 unidades.
+64,SET-CUBIERTOS-16P,Set de Cubiertos,Mesa Elegante,2025-10-26,Portugal,2045-10-26,48,39.99,Set de 16 cubiertos de acero inoxidable (4 servicios).
+65,SUETER-CUELLO-V-L,Suéter de Lana,Abrigo de Invierno,2025-09-13,Turquía,2030-09-13,33,32.00,Suéter de punto con cuello en V. 70% lana. Talla L. Color gris.
+66,CABLE-HDMI-3M,Cable HDMI,Alta Velocidad 4K,2025-10-21,China,2035-10-21,190,7.99,Cable HDMI 2.0 de 3 metros de longitud. Soporta resolución 4K.
+67,MUEBLE-TELE-MADERA,Mueble para TV,Estilo Nórdico,2025-09-07,Suecia,2040-09-07,6,165.00,Mueble bajo para televisión, de madera de pino. Dos cajones.
+68,CHALECO-REFLEC-SEG,Chaleco Reflectante,Seguridad Vial,2025-10-30,México,2035-10-30,220,4.90,Chaleco de seguridad reflectante de alta visibilidad. Talla única.
+69,GEL-DUCHA-CITRICOS,Gel de Ducha,Frescura Cítrica,2025-09-24,Italia,2027-09-24,130,3.95,Gel de ducha con aroma a cítricos. Botella de 750ml. pH neutro.
+70,MONITOR-PC-27INCH,Monitor de PC,Pantalla Full HD,2025-10-09,Corea del Sur,2033-10-09,16,219.00,Monitor de 27 pulgadas, resolución 1080p. Conexión HDMI y VGA.
+71,GUANTES-JARDIN-M,Guantes de Jardinería,Mano Protegida,2025-09-18,Pakistán,2028-09-18,65,6.50,Guantes de jardinería resistentes. Talla mediana. Con agarre de goma.
+72,SACO-DORMIR-TEMP0,Saco de Dormir,Aventura Cero Grados,2025-10-25,India,2035-10-25,14,49.99,Saco de dormir momia para temperaturas de hasta 0°C.
+73,LECHE-ENTERA-1L,Leche Entera UHT,Campo Fresco,2025-09-06,España,2026-03-06,350,1.20,Leche entera UHT en envase de cartón de 1 litro.
+74,CAMA-PERRO-GRANDE,Cama para Perro,Descanso Canino XL,2025-10-17,China,2040-10-17,28,45.00,Cama para perro grande, acolchada y lavable. Color marrón.
+75,RATON-INLAMBRICO-BT,Ratón Inalámbrico,Mouse Ultra Delgado,2025-09-21,Taiwán,2030-09-21,98,15.00,Ratón óptico inalámbrico por Bluetooth. Diseño ergonómico.
+76,JARABE-TOS-ADULTO,Jarabe para la Tos,Alivio Rápido,2025-10-29,Suiza,2027-05-29,115,8.90,Jarabe expectorante para adultos. Sabor a miel y limón. Frasco de 150ml.
+77,FOCO-EXTERIOR-LED,Foco Exterior LED,Ilumina Fachadas,2025-09-16,Alemania,2035-09-16,40,28.50,Foco proyector LED para exteriores, resistente al agua (IP65).
+78,CEREAL-AVENA-INTEG,Cereal de Avena,Desayuno Saludable,2025-10-13,Canadá,2026-06-13,170,4.25,Cereal de copos de avena integral. Bolsa de 500g. Fuente de fibra.
+79,PRODUCTO-NO-EXISTE,Producto de Relleno,Temporalmente Ausente,2025-11-05,EE.UU.,2030-11-05,0,0.00,Este es un registro de relleno con stock cero.
+80,CUIDADO-SHA-SHAPELOLIM,Shampoo Anticaspa,Shampoo Pelo Limpio,2025-09-12,México,2025-09-28,1,5.90,Shampoo de 400ml formulado para eliminar y prevenir la caspa. Deja el cabello suave y sin residuos.

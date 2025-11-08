@@ -129,9 +129,10 @@ def actualizar_lote(lote, unidades=None, precio=None):
             cursor.execute(
                 "UPDATE productos SET precio=? WHERE lote=?", (float(precio),lote,)
             )
-
-        print("Actualizado Correctamente")
         conexion.commit()
+        return True
+
+        
 
     except sqlite3.Error as e:
         print(f"Ocurrió un error al actualizar el lote: {e}")

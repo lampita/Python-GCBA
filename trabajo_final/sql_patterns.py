@@ -1,0 +1,8 @@
+todos = "SELECT * FROM productos"
+por_id = "SELECT * FROM productos WHERE lote = {}"
+por_vencer = "SELECT * FROM productos WHERE fecha_de_vencimiento != 'N/A' AND cantidad_unidades_en_stock > 0 AND fecha_de_vencimiento BETWEEN '{}' AND '{}'"
+lote_vencido = "SELECT * FROM productos WHERE fecha_de_vencimiento != 'N/A' AND cantidad_unidades_en_stock > 0 AND fecha_de_vencimiento < '{}'"
+poco_stock = "SELECT * FROM productos WHERE cantidad_unidades_en_stock <= {} AND cantidad_unidades_en_stock > 0"
+agotados = "SELECT * FROM productos WHERE cantidad_unidades_en_stock = 0"
+unidades = "SELECT SUM(cantidad_unidades_en_stock) FROM productos"
+buscar_palabra = "SELECT * FROM productos WHERE producto LIKE '%{}%' OR nombre_fantasia LIKE '%{}%' OR pais_de_origen LIKE '%{}%' OR fecha_de_vencimiento LIKE '%{}%' OR cantidad_unidades_en_stock LIKE '%{}%' OR precio LIKE '%{}%' OR pequena_descripcion LIKE '%{}%'"

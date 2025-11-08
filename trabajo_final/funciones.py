@@ -1,6 +1,5 @@
 import os
-from rich.table import Table
-from rich.text import Text
+
 from datetime import datetime
 
 hoy = datetime.now().date()
@@ -48,74 +47,23 @@ def validar_fecha(cadena_fecha):
         return False
 
 
-def crear_tabla(resultados, titulo, query=None):
-    table = Table(title=titulo)
-    table.add_column("Lote", justify="left", style="orange3 bold")
-    table.add_column("SKU", justify="left")
-    table.add_column("Producto", justify="left")
-    table.add_column("Marca", justify="left")
-    table.add_column("Origen", justify="left")
-    table.add_column("Vence", justify="right")
-    table.add_column("Stock", justify="right")
-    table.add_column("Precio", justify="right")
-    table.add_column("Descripción", justify="left")
-
-    for resultado in resultados:
-        lote = Text(str(resultado[0]))
-        if query is not None:
-            lote.highlight_words([query], style="bold yellow", case_sensitive=False)
-
-        sku = Text(str(resultado[1]))
-        if query is not None:
-            sku.highlight_words([query], style="bold yellow", case_sensitive=False)
-
-        producto = Text(str(resultado[2]))
-        if query is not None:
-            producto.highlight_words([query], style="bold yellow", case_sensitive=False)
-
-        marca = Text(str(resultado[3]))
-        if query is not None:
-            marca.highlight_words([query], style="bold yellow", case_sensitive=False)
-
-        origen = Text(str(resultado[5]))
-        if query is not None:
-            origen.highlight_words([query], style="bold yellow", case_sensitive=False)
-
-        vence = Text(str(resultado[6]))
-        if query is not None:
-            vence.highlight_words([query], style="bold yellow", case_sensitive=False)
-        elif (
-            resultado[6] != "N/A"
-            and hoy
-            > datetime.strptime(resultado[6], "%Y-%m-%d").date()
-        ):
-            vence.style = "red bold"
-
-        stock = Text(str(resultado[7]))
-        if query is not None:
-            stock.highlight_words([query], style="bold yellow", case_sensitive=False)
-        elif resultado[7] == 0:
-            stock.style = "red bold"
-
-        precio = Text(str(resultado[8]))
-        if query is not None:
-            precio.highlight_words([query], style="bold yellow", case_sensitive=False)
-
-        descripcion = Text(str(resultado[9]))
-        if query is not None:
-            descripcion.highlight_words(
-                [query], style="bold yellow", case_sensitive=False
-            )
-
-        table.add_row(
-            lote,
-            sku,
-            producto,
-            marca,
-            origen,
-            vence,
-            stock,
-            precio,
-            descripcion,
-        )
-    return table
+def display(
+    total_de_unidades,
+    total_de_lotes,
+    total_stock_critico,
+    total_sin_stock,
+    total_de_vencidos,
+    total_vencimiento_critico,
+    console,
+):
+    console.print(
+        f"\t{'=' * 31}\n\t[bold red]CONTROL DE STOCK Y VENCIMIENTOS[/bold red]\n\t{'=' * 31}"
+    )
+    console.print(f"Total de Unidades: [orange3]{total_de_unidades}[/orange3]")
+    console.print(f"Total de Lotes en Registro: [orange3]{total_de_lotes}[/orange3]\n")
+    console.print(
+        f"Total Lotes[bold green ]{conv_to_super(total_de_lotes)}[/bold green ] Stock Critico[bold yellow]{conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{conv_to_super(total_sin_stock)}[/bold red]"
+    )
+    console.print(
+        f"Lotes Validos[bold green]{conv_to_super(total_de_lotes - total_sin_stock - total_de_vencidos)}[/bold green] Por Vencer[bold yellow]{conv_to_super(total_vencimiento_critico)}[/bold yellow] Vencidos[bold red]{conv_to_super(total_de_vencidos)}[/bold red]"
+    )
