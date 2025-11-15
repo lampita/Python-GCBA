@@ -6,6 +6,8 @@ hoy = datetime.now().date()
 
 
 def crear_tabla_total():
+    """Devuelve la estructura de la tabla (titulo, columnas, estilos) y es utilizada
+    para mostrar los registros totales de la base de datos"""
     table = Table(
         title="[bold underline ]\nTOTAL DE LOTES EN REGISTRO\n[/bold underline]"
     )
@@ -30,6 +32,10 @@ def crear_tabla_total():
 
 
 def crear_tabla(resultados, titulo, query=None):
+    """Devuelve la estructura de la tabla (titulo, columnas, estilos). Toma como parametros
+    las filas que se van a mostrar, el titulo de la tabla y un parametro optativo si la tabla mostrara
+    la palabra clave de una busqueda. Si se ingresa este ultimo paramerto, el estilo de presentacion de
+    la tabla es diferente."""
     table = Table(title=titulo)
     table.add_column("Lote", justify="left", style="orange3 bold")
     table.add_column("SKU", justify="left")

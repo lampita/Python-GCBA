@@ -13,6 +13,7 @@ def borrar_consola():
 
 
 def conv_to_super(n):
+    """Devuelve el numero ingresado como un string-superindice, usando la funcion chr() de Python"""
     super = list(map(chr, [8304, 185, 178, 179, 8308, 8309, 8310, 8311, 8312, 8313]))
     st = ""
     for i in str(n):
@@ -21,6 +22,9 @@ def conv_to_super(n):
 
 
 def num_es_valido(num):
+    """Valida un numero entero ingresado por el usuario. Si es valido devuelve una tupla con el numero convertido
+    en un entero o, caso contrario, el mensaje de error al validar.
+    El segundo valor de la tupla es un flag indicando si es valido o no."""
     if not num.strip():
         return (" ->Dato Vacío -> No se modificó el valor.\n"), "❌ "
     if not num.isdigit():  ##isdigt() tambien devuelve False en casos de str que representen numeros negativos
@@ -32,6 +36,7 @@ def num_es_valido(num):
 
 
 def float_es_valido(num):
+    """Valida un numero flotante ingresado por el usuario. Si es valido devuelve True, caso contrario False."""
     try:
         float(num)
         return True
@@ -40,6 +45,7 @@ def float_es_valido(num):
 
 
 def validar_fecha(cadena_fecha):
+    """Valida una fecha ingresada por el usuario. Si la fecha es valida devuelve True, caso contrario False."""
     try:
         datetime.strptime(cadena_fecha, "%Y-%m-%d")
         return True
@@ -56,6 +62,7 @@ def display(
     total_vencimiento_critico,
     console,
 ):
+    """Muestra el total de lotes y unidades. Muestra con superindices los lotes validos, criticos e invalidos"""
     console.print(
         f"\t{'=' * 31}\n\t[bold red]CONTROL DE STOCK Y VENCIMIENTOS[/bold red]\n\t{'=' * 31}"
     )

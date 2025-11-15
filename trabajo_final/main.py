@@ -9,28 +9,30 @@ except ImportError:
 
 from rich.console import Console
 from rich.table import Table
-from funciones import (
-    borrar_consola,
-    num_es_valido,
-    validar_fecha,
-    float_es_valido,
-    display,
-)
+import funciones_auxiliares as aux
 from datetime import datetime, timedelta
 import engine_db as engine
 import engine_tablas as tablas
 import sql_patterns as sql
 
+engine.crear_db(sql.inicia_tabla)
 
-umbral_stock_critico = 50
-umbral_vencimiento_critico = 5
+
+umbral_stock_critico = 50  # Arbitrario
+umbral_vencimiento_critico = 5  # Arbitrario
 console = Console(highlight=False)
 hoy = datetime.now().date()
 
 
 salida_menu = False
+
 while not salida_menu:
-    borrar_consola()
+    aux.borrar_consola()
+
+    # Suma el total de lotes y el total de unidades de todos los lotes.
+    # Consulta la base de datos para definir los lotes como Validos, No validos y Criticos.
+    # Transforma los valores obtenidos en superindices
+
     prod = engine.consultar_base(sql.todos)
     dias_umbral = timedelta(days=umbral_vencimiento_critico)
     fecha_limite = hoy + dias_umbral
@@ -47,7 +49,7 @@ while not salida_menu:
     total_sin_stock = len(sin_stock)
     total_stock_critico = len(stock_critico)
 
-    display(
+    aux.display(
         total_de_unidades,
         total_de_lotes,
         total_stock_critico,
@@ -56,6 +58,8 @@ while not salida_menu:
         total_vencimiento_critico,
         console,
     )
+
+    # Inicio Menu de opciones
 
     console.print("""\nMENU DE OPCIONES:
     1. Modificar Umbrales de Stock y Vencimiento.
@@ -71,6 +75,7 @@ while not salida_menu:
 
     match opcion_menu:
         case "1":
+            # Modifica los umbrales que fueron iniciados en con valores arbitrarios.
             console.print(
                 "Ingrese Umbral Stock. [i](Actual en[/i] "
                 + "[i]"
@@ -79,7 +84,7 @@ while not salida_menu:
                 end="",
             )
 
-            modificador_stock, check = num_es_valido(input())
+            modificador_stock, check = aux.num_es_valido(input())
             if check == "✔️\n":
                 umbral_stock_critico = modificador_stock
                 console.print(
@@ -96,7 +101,7 @@ while not salida_menu:
                 + " días[/i]): ",
                 end="",
             )
-            modificador_vencimiento, check = num_es_valido(input())
+            modificador_vencimiento, check = aux.num_es_valido(input())
             if check == "✔️\n":
                 umbral_vencimiento_critico = modificador_vencimiento
                 console.print(
@@ -109,7 +114,12 @@ while not salida_menu:
             input("ENTER para volver al menu ")
 
         case "2":
-            borrar_consola()
+            # Consulta la base de datos y muestra el total de registros. Las fechas anteriores
+            # a hoy las colorea en rojo y en amarillo las que caen dentro del umbral definido.
+            # Los registros con 0 de stock los colorea en rojo y en amarillo si estan dentro
+            # del valor definido en el umbral
+
+            aux.borrar_consola()
 
             tabla_total = tablas.crear_tabla_total()
             items = engine.consultar_base(sql.todos)
@@ -149,7 +159,7 @@ while not salida_menu:
                     f"{item[0]}",
                     f"{item[1]}",
                     f"{item[2]}",
-                    f"{item[3]}",
+                    f"{item[5]}",
                     f"{fecha_con_alerta}",
                     f"{stock_con_alerta}",
                     f"{item[8]}",
@@ -160,7 +170,9 @@ while not salida_menu:
             input("\nENTER para volver al menu ")
 
         case "3":
-            borrar_consola()
+            # Consulta la base de datos y muestra solamente los lotes no validos (son los que estan vencidos o estan
+            # con stock en 0)
+            aux.borrar_consola()
 
             lotes_no_validos = sin_stock + vencidos
             consolidado = []
@@ -179,8 +191,9 @@ while not salida_menu:
 
         case "4":
             while True:
-                borrar_consola()
-                table = Table()  # vacía la tabla que queda de una búsqueda anterior.
+                # Busca una palabra clave en todos los campos de la base de datos
+                aux.borrar_consola()
+                table = Table()  # vacía la tabla que queda de la búsqueda anterior.
 
                 query = (
                     input(
@@ -215,7 +228,11 @@ while not salida_menu:
                 salida = input("\nENTER para continuar... ")
 
         case "5":
-            borrar_consola()
+            # Agrega un lote a la base de datos. Hace comprobaciones de los datos ingresados. Comprueba la validez
+            # del formato del sku, de la fecha, stock y precio. Si no son validos lo reemplaza por 'N/A'.
+            # Antes de insertar un lote, lo previsualiza para que el usuario confirme los datos ingresados.
+
+            aux.borrar_consola()
             lote = "Id"
             console.print("[bold underline]AGREGAR LOTE[/bold underline]\n")
             sku = []
@@ -228,8 +245,8 @@ while not salida_menu:
             console.print(f"\n[red bold]SKU ingresado:[/red bold] {sku}\n")
 
             producto = input("Tipo de Producto: ").strip().capitalize()
-            if producto == "":
-                producto = "N/A"
+
+            producto = "N/A" if producto == "" else producto
             nombre_fantasia = input("Nombre del  Producto: ").strip().capitalize()
             if nombre_fantasia == "":
                 nombre_fantasia = "N/A"
@@ -243,7 +260,7 @@ while not salida_menu:
                 fecha = input(f"Ingrese Fecha de Vencimiento ({formato[i]}): ").strip()
                 vence.append(fecha)
             fecha_de_vencimiento = "-".join(vence)
-            if not validar_fecha(fecha_de_vencimiento):
+            if not aux.validar_fecha(fecha_de_vencimiento):
                 fecha_de_vencimiento = "N/A"
                 console.print(
                     "\n[red on white] ADVERTENCIA: introdujo una fecha incorrecta. Se asignó 'N/A' [/red on white]\n"
@@ -257,7 +274,7 @@ while not salida_menu:
                 )
 
             precio = input("Precio por Unidad: ")
-            if not float_es_valido(precio):
+            if not aux.float_es_valido(precio):
                 precio = "0"
                 console.print(
                     "\n[red on white] ADVERTENCIA: introdujo una valor incorrecto. Se asignó 0.0 [/red on white]\n"
@@ -267,7 +284,7 @@ while not salida_menu:
             if pequena_descripcion == "":
                 pequena_descripcion = "N/A"
 
-            borrar_consola()
+            aux.borrar_consola()
 
             titulo = "[bold underline]LOTE A REGISTRAR[/bold underline] 👇\n"
             console.print(
@@ -294,7 +311,7 @@ while not salida_menu:
                 console.print("\n[red on white] No se Agregó el Lote. [/red on white]")
                 input("\nENTER para volver al menu ")
                 continue
-            registro = (
+            registro_nuevo = (
                 sku,
                 producto,
                 nombre_fantasia,
@@ -306,7 +323,7 @@ while not salida_menu:
                 pequena_descripcion,
             )
 
-            agregado = engine.agregar_producto(registro)
+            agregado = engine.agregar_producto(registro_nuevo, sql.inserta_en_campos)
             if agregado:
                 console.print(
                     "\n[bold blue1 on white] Lote Agregado Correctamente. [/bold blue1 on white]"
@@ -315,7 +332,10 @@ while not salida_menu:
             input("\nENTER para volver al menu ")
 
         case "6":
-            borrar_consola()
+            # Elimina un Lote de la base de datos de acuerdo al Id. Antes de borrar lo previsualiza para
+            # que el usuario confirme.
+
+            aux.borrar_consola()
 
             console.print("[bold underline]BORRAR LOTE[/bold underline]\n")
             lote_id = input("Número de Lote a Borrar: ").strip()
@@ -356,7 +376,11 @@ while not salida_menu:
                 input("\nENTER para volver al menu ")
 
         case "7":
-            borrar_consola()
+            # Permite actualizar el valor de los stocks de acuerdo a las ventas diarias.
+            # Tambien permite actualizar el precio.
+            # Antes de actualizar lo previsualiza para que el usuario confirme.
+
+            aux.borrar_consola()
             console.print(
                 "[bold underline]ACTUALIZAR STOCK O PRECIO[/bold underline]\n"
             )
@@ -391,7 +415,7 @@ while not salida_menu:
                         )
                     nuevo_precio = input("\nNuevo Precio: ").strip()
 
-                    if not float_es_valido(nuevo_precio):
+                    if not aux.float_es_valido(nuevo_precio):
                         nuevo_precio = None
                         console.print(
                             "\n[red on white] ADVERTENCIA: No se modifico el Precio. [/red on white]\n"
@@ -424,5 +448,5 @@ while not salida_menu:
                 input("\nENTER para volver al menu ")
 
         case "8":
-            console.print("Saliendo...\n")
+            console.print("\nSaliendo.....\n")
             salida_menu = True
