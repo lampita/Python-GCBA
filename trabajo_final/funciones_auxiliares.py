@@ -1,9 +1,5 @@
 import os
-
 from datetime import datetime
-
-hoy = datetime.now().date()
-
 
 def borrar_consola():
     if os.name == "nt":
@@ -24,7 +20,7 @@ def conv_to_super(n):
 def num_es_valido(num):
     """Valida un numero entero ingresado por el usuario. Si es valido devuelve una tupla con el numero convertido
     en un entero o, caso contrario, el mensaje de error al validar.
-    El segundo valor de la tupla es un flag indicando si es valido o no."""
+    En ambos casos el segundo valor de la tupla es un flag indicando si es valido o no."""
     if not num.strip():
         return (" ->Dato Vacío -> No se modificó el valor.\n"), "❌ "
     if not num.isdigit():  ##isdigt() tambien devuelve False en casos de str que representen numeros negativos
@@ -69,8 +65,14 @@ def display(
     console.print(f"Total de Unidades: [orange3]{total_de_unidades}[/orange3]")
     console.print(f"Total de Lotes en Registro: [orange3]{total_de_lotes}[/orange3]\n")
     console.print(
-        f"Total Lotes[bold green ]{conv_to_super(total_de_lotes)}[/bold green ] Stock Critico[bold yellow]{conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{conv_to_super(total_sin_stock)}[/bold red]"
+        f"Total Lotes[bold green ]{conv_to_super(total_de_lotes)}[/bold green ]"
     )
     console.print(
-        f"Lotes Validos[bold green]{conv_to_super(total_de_lotes - total_sin_stock - total_de_vencidos)}[/bold green] Por Vencer[bold yellow]{conv_to_super(total_vencimiento_critico)}[/bold yellow] Vencidos[bold red]{conv_to_super(total_de_vencidos)}[/bold red]"
+        f"Lotes Validos[bold green]{conv_to_super(total_de_lotes - total_sin_stock - total_de_vencidos)}[/bold green]")
+    
+    console.print(
+        f"Stock Critico[bold yellow]{conv_to_super((total_stock_critico))}[/bold yellow] Agotados[bold red]{conv_to_super(total_sin_stock)}[/bold red]"
+    )
+    console.print(
+        f"Por Vencer[bold yellow]{conv_to_super(total_vencimiento_critico)}[/bold yellow] Vencidos[bold red]{conv_to_super(total_de_vencidos)}[/bold red]"
     )

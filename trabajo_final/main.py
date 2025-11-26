@@ -14,8 +14,11 @@ from datetime import datetime, timedelta
 import engine_db as engine
 import engine_tablas as tablas
 import sql_patterns as sql
+import os
 
-engine.crear_db(sql.inicia_tabla)
+ruta_db = os.path.join(os.path.dirname(os.path.abspath(__file__)), "productos.db")
+if not os.path.exists(ruta_db):
+    engine.crear_db(sql.inicia_tabla)
 
 
 umbral_stock_critico = 50  # Arbitrario
@@ -23,13 +26,12 @@ umbral_vencimiento_critico = 5  # Arbitrario
 console = Console(highlight=False)
 hoy = datetime.now().date()
 
-
 salida_menu = False
 
 while not salida_menu:
     aux.borrar_consola()
 
-    # Suma el total de lotes y el total de unidades de todos los lotes.
+    # Las siguientes lineas suman el total de lotes y el total de unidades de todos los lotes.
     # Consulta la base de datos para definir los lotes como Validos, No validos y Criticos.
     # Transforma los valores obtenidos en superindices
 
@@ -75,7 +77,7 @@ while not salida_menu:
 
     match opcion_menu:
         case "1":
-            # Modifica los umbrales que fueron iniciados en con valores arbitrarios.
+            # Modifica los umbrales que fueron iniciados con los valores arbitrarios.
             console.print(
                 "Ingrese Umbral Stock. [i](Actual en[/i] "
                 + "[i]"
@@ -115,9 +117,9 @@ while not salida_menu:
 
         case "2":
             # Consulta la base de datos y muestra el total de registros. Las fechas anteriores
-            # a hoy las colorea en rojo y en amarillo las que caen dentro del umbral definido.
-            # Los registros con 0 de stock los colorea en rojo y en amarillo si estan dentro
-            # del valor definido en el umbral
+            # a hoy ('vencidos') las colorea en rojo y en amarillo las que estan entre hoy y el umbral definido.
+            # Los registros con 0 de stock los colorea en rojo y en amarillo si estan entre 1 y 
+            # el umbral definido
 
             aux.borrar_consola()
 
@@ -170,7 +172,7 @@ while not salida_menu:
             input("\nENTER para volver al menu ")
 
         case "3":
-            # Consulta la base de datos y muestra solamente los lotes no validos (son los que estan vencidos o estan
+            # Consulta la base de datos y muestra solamente los lotes no validos (son los que estan vencidos o 
             # con stock en 0)
             aux.borrar_consola()
 
